@@ -1,0 +1,16 @@
+th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    border-radius: 10px;
+    border-color: green;
+    background-color: salmon;
+}
+tr {
+    height: 100px;
+}
+td {
+    text-align: center;
+}
+table {
+    width: 50%;
+}

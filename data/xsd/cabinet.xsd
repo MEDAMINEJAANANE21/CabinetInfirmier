@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema 
+    targetNamespace = "http://www.univ-grenoble-alpes.fr/l3miage/medical"
+    xmlns = "http://www.w3.org/2001/XMLSchema"
+    xmlns:med = "http://www.univ-grenoble-alpes.fr/l3miage/medical"
+    elementFormDefault="qualified">
+    
+    <element name="cabinet" type="med:Cabinet">
+        <unique name="idInfirmier">
+            <selector xpath=".//med:infirmier"/>
+            <field xpath="@id"/>
+        </unique>
+        <unique name="NIR">
+            <selector xpath=".//med:patient"/>
+            <field xpath="@numéro"/>
+        </unique>
+        <keyref name="refIntervenant" refer="med:idInfirmier">
+            <selector xpath=".//med:patients/med:patient/med:visite"/>
+            <field xpath="@intervenant"/>
+        </keyref>
+    </element>
+    
+    
+    <complexType name="Cabinet">
+        <sequence>
+            <element name="nom" type="string"/>
+            <element name="adresse" type="med:Adresse"/>
+            <element name="infirmiers" type="med:Infirmiers"/>
+            <element name="patients" type="med:Patients"/>
+        </sequence>
+    </complexType>
+    
+    <!-- Type Adresse -->
+    
+    <complexType name="Adresse">
+        <sequence>
+            <element name="numéro" type="int" minOccurs="0"/>
+            <element name="rue" type="string"/>
+            <element name="codePostal" type="med:CodePostal"/>
+            <element name="ville" type="string"/>
+            <element name="étage" type="int" minOccurs="0"/> <!-- ici l'étage est optionnel-->
+        </sequence>
+    </complexType>
+    
+    <!-- Type CodePostal -->
+    <!-- Ici on a decide de faire tout les departements qui existent en france et la corse et l'autre mer -->
+    
+    <simpleType name="CodePostal">
+        <restriction base="string">
+            <pattern value="(0[1-9]|[1-9][0-9]|2A|2B|9[78])\d{3}"/>
+        </restriction>
+    </simpleType>
+    
+    
+    
+    <complexType name="Infirmiers">
+        <sequence>
+            <element name="infirmier" type="med:Infirmier"  maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+    
+    <!-- Type Infirmier -->
+    
+    <complexType name="Infirmier">
+        <attribute name="id" type="med:ID" use="required"/>
+        <attribute name="nom" type="string"  use="required"/>
+        <attribute name="prénom" type="string"  use="required"/>
+        <attribute name="photo" type="med:Photo"/>
+    </complexType>
+    
+    <!-- Type ID -->
+    <!-- Il permet de faire une restriction car il doit avoir 3 chiffres max -->
+    
+    <simpleType name="ID">
+        <restriction base="int">
+            <pattern value="[0-9]{3}"/>
+        </restriction>
+    </simpleType>
+    
+    <!-- Type Photo -->
+    <!-- Ici je dois faire une restriction pour la forme de la photo :
+    le photo doit se terminer avec .jpg ou .jpeg ou .png-->
+    
+    <simpleType name="Photo">
+        <restriction base="string">
+            <pattern value=".*\.(jpe?g|png)"/>
+        </restriction>
+    </simpleType>
+    
+    
+    <complexType name="Patients">
+        <sequence>
+            <element name="patient" type="med:Patient" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+    
+    <!-- Type Patient-->
+    
+    <complexType name="Patient">
+        <sequence>
+            <element name="nom" type="string"/>
+            <element name="prénom" type="string"/>
+            <element name="sexe" type="med:Sexe"/>
+            <element name="naissance" type="date"/>
+            <element name="adresse" type="med:Adresse"/>
+            <element name="visite" type="med:Visite"/>
+        </sequence>
+            <attribute name="numéro" type="med:NIR" use="required"/>
+    </complexType>
+    
+    <!-- Type NIR : qui doit etre un string car il se compose de 15 caractere tandis que le int se compose de 10 caracteres-->
+    <!-- La structure du numéro social :
+    - Le 1e chiffre est soit le chiffre 1, si vous êtes un homme, soit le chiffre 2, si vous êtes une femme.
+    - La 2e série se compose de 2 chiffres et correspond aux deux derniers chiffres de votre année de naissance, par exemple 85 si vous êtes nés en 1985.
+    - La 3e série se compose de 2 chiffres et correspond à votre mois de naissance, par exemple 05 si vous êtes nés en mai.
+    - La 4e série se compose de 2 chiffres et correspond à votre département de naissance, ou 99 si vous êtes né à l’étranger.
+    - La 5e série se compose de 3 chiffres et correspond au numéro Insee de votre commune ou pays de naissance.
+    - La 6e série se compose de 3 chiffres et correspond à l’ordre d’enregistrement de votre naissance sur le registre d’état civil de votre commune pour le mois de votre naissance.
+    - La 7e et dernière série se compose de 2 chiffres correspondant à la clé de sécurité.
+    -->
+    
+    <simpleType name="NIR">
+        <restriction base="string">
+            <pattern value="[12]\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-8]\d|9[0-5]|99)\d{3}\d{3}\d{2}"/>
+            <length value="15"/>
+        </restriction>
+    </simpleType>
+    
+    <!-- Type Sexe -->
+    
+    <simpleType name="Sexe">
+        <restriction base="string">
+            <enumeration value="M"/>
+            <enumeration value="F"/>
+        </restriction>
+    </simpleType>
+    
+    <!-- Type Visite -->
+    
+    <complexType name="Visite">
+        <sequence>
+            <element name="acte" type="med:Acte" maxOccurs="unbounded"/>
+        </sequence>
+        <attribute name="date" type="date"/>
+        <attribute name="intervenant" type="med:ID"/> <!-- Id de l'infirmier-->
+    </complexType>
+    
+    <!-- Type Acte : c'est un complex type car on a un attribut -->
+    
+    <complexType name="Acte">
+        <attribute name="id" type="med:ID" use="required"/>
+    </complexType>
+ 
+</schema>

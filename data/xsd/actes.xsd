@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema
+        targetNamespace = "http://www.univ-grenoble-alpes.fr/l3miage/actes"
+        xmlns = "http://www.w3.org/2001/XMLSchema"
+        xmlns:med = "http://www.univ-grenoble-alpes.fr/l3miage/actes"
+        elementFormDefault="qualified">
+    
+    <element name="ngap" type="med:Ngap">
+        
+        <unique name="idType">
+            <selector xpath=".//med:type"/>
+            <field xpath="@id"/>
+        </unique>
+        <!-- Faut juste ajouter les contraintes-->
+    </element>
+    
+    <complexType name="Ngap">
+        <sequence>
+            <element name="types" type="med:Types"/>
+            <element name="actes" type="med:Actes"/>
+        </sequence>
+    </complexType>
+    
+    <complexType name="Types">
+        <sequence>
+            <element name="type" type="med:Type" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+    
+    <complexType name="Type">
+        <simpleContent>
+            <extension base="string"> <!--le string c pour le texte  -->
+                <attribute name="id" type="string" use="required"/>
+            </extension>
+        </simpleContent>
+    </complexType>
+
+    <complexType name="Actes">
+        <sequence>
+            <element name="acte" type="med:Acte" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+
+    <complexType name="Acte">
+        <simpleContent>
+            <extension base="string"> 
+                <attribute name="id" type="med:IdAc" use="required"/>
+                <attribute name="type" type="med:IdTy" use="required"/>
+                <attribute name="clé" type="string" use="required"/>
+                <attribute name="coef" type="double" use="required"/>
+            </extension>
+        </simpleContent>
+    </complexType>
+    
+    <simpleType name="IdAc">
+        <restriction base="int">
+            <pattern value="[0-9]{3}"/>
+        </restriction>
+    </simpleType>
+    
+    <simpleType name="IdTy">
+        <restriction base="string">
+            <pattern value="[a-z]{2}"/>
+        </restriction>
+    </simpleType>
+    
+</schema>

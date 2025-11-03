@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cabinet xmlns="http://www.univ-grenoble-alpes.fr/l3miage/medical"
+         xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"
+         xs:schemaLocation="http://www.univ-grenoble-alpes.fr/l3miage/medical ../xsd/cabinet.xsd">
+    
+    <nom>jaananeCabinet</nom>
+    <adresse>
+        <numéro>55</numéro>
+        <rue>allee</rue>
+        <codePostal>38400</codePostal>
+        <ville>grenoble</ville>
+    </adresse>
+    <infirmiers>
+        <infirmier id="001" nom="jaanane" prénom="amine"/>
+    </infirmiers>
+    
+    
+    <patients>
+        <patient numéro="206049935000375">
+            <nom>bounoune</nom>
+            <prénom>hiba</prénom>
+            <sexe>F</sexe>
+            <naissance>2004-04-14</naissance>
+            <adresse>
+                <numéro>55</numéro>
+                <rue>faure</rue>
+                <codePostal>38400</codePostal>
+                <ville>grenoble</ville>
+                <étage>4</étage>
+            </adresse>
+            <visite date="2025-10-14" intervenant="001">
+                <acte id="101"/>
+            </visite>
+        </patient>
+        <patient numéro="282036912305243">
+            <nom>Orouge</nom>
+            <prénom>Elvira</prénom>
+            <sexe>F</sexe>
+            <naissance>1982-03-08</naissance>
+            <adresse>
+                <rue>Rond-Point de la Croix de Vie</rue>
+                <codePostal>38700</codePostal>
+                <ville>La Tronche</ville>
+            </adresse>
+            <visite date="2015-12-08" intervenant="001">
+                <acte id="104"/>
+            </visite>
+        </patient>
+        <patient numéro="175037306569237">
+            <nom>Pien</nom>
+            <prénom>Oscare</prénom>
+            <sexe>M</sexe>
+            <naissance>1975-03-25</naissance>
+            <adresse>
+                <rue>rue Casimir Brenier</rue>
+                <codePostal>38000</codePostal>
+                <ville>Grenoble</ville>
+            </adresse>
+            <visite date="2015-12-08" intervenant="001">
+                <!-- ponction veineuse directe -->
+                <acte id="101"/>
+                <!-- injection intraveineuse directe isolée d’anthalgiques -->
+                <acte id="105"/>
+            </visite>
+        </patient>
+        <patient numéro="111083306303521">
+            <nom>Kapoëtla</nom>
+            <prénom> Xavier</prénom>
+            <sexe>M</sexe>
+            <naissance>2011-08-02</naissance>
+            <adresse>
+                <rue>25 rue des Martyrs</rue>
+                <codePostal>38042</codePostal>
+                <ville>Grenoble</ville>
+            </adresse>
+            <visite date="2015-12-08" intervenant="001">
+                <!--injection de plusieurs allergènes afin d’être désensibilisé-->
+                <acte id="106"/>
+            </visite>
+        </patient>
+    </patients>
+</cabinet>
