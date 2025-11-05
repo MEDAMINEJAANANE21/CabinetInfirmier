@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema 
+        targetNamespace="http://www.univ-grenoble-alpes.fr/l3miage/patient"
+        xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:xs="http://www.univ-grenoble-alpes.fr/l3miage/patient"
+        elementFormDefault="qualified">
+    
+    <!-- La racine du patient-->
+    <element name="patient" type="xs:Patient"/>
+    
+    <complexType name="Patient">
+        <sequence>
+            <element name="nom" type="string"/>
+            <element name="prénom" type="string"/>
+            <element name="sexe" type="xs:Sexe"/>
+            <element name="naissance" type="date"/>
+            <element name="numéroSS" type="xs:NIR"/>
+            <element name="adresse" type="xs:Adresse"/>
+            <element name="visite" type="xs:Visites" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+    
+    <simpleType name="Sexe">
+        <restriction base="string">
+            <enumeration value="M"/>
+            <enumeration value="F"/>
+        </restriction>
+    </simpleType>
+    
+    <simpleType name="NIR">
+        <restriction base="string">
+            <pattern value="[12]\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-8]\d|9[0-5]|99)\d{3}\d{3}\d{2}"/>
+            <length value="15"/>
+        </restriction>
+    </simpleType>
+    
+   <complexType name="Adresse">
+       <sequence>
+           <element name="rue" type="string"/>
+           <element name="codePostal" type="xs:CodePostal"/>
+           <element name="ville" type="string"/>
+       </sequence>
+   </complexType>
+    
+    <simpleType name="CodePostal">
+        <restriction base="string">
+            <pattern value="(0[1-9]|[1-9][0-9]|2A|2B|9[78])\d{3}"/>
+        </restriction>
+    </simpleType>
+    
+    <complexType name="Visites">
+        <sequence>
+            <element name="intervenant" type="xs:Intervenant"/>
+            <element name="acte" type="string" maxOccurs="unbounded"/>
+        </sequence>
+        <attribute name="date" type="date"/>
+    </complexType>
+    
+    <complexType name="Intervenant">
+        <sequence>
+            <element name="nom" type="string"/>
+            <element name="prénom" type="string"/>
+        </sequence>
+    </complexType>
+ 
+</schema>

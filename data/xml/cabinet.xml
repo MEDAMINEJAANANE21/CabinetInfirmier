@@ -17,8 +17,8 @@
     
     <patients>
         <patient numéro="206049935000375">
-            <nom>bounoune</nom>
-            <prénom>hiba</prénom>
+            <nom>Bounoune</nom>
+            <prénom>Hiba</prénom>
             <sexe>F</sexe>
             <naissance>2004-04-14</naissance>
             <adresse>
@@ -30,6 +30,7 @@
             </adresse>
             <visite date="2025-10-14" intervenant="001">
                 <acte id="101"/>
+                <acte id="106"/>
             </visite>
         </patient>
         <patient numéro="282036912305243">

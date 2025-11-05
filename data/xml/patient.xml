@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<patient xmlns="http://www.univ-grenoble-alpes.fr/l3miage/patient"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"
+            xs:schemaLocation="http://www.univ-grenoble-alpes.fr/l3miage/patient ../xsd/patient.xsd">
+    <nom>Pourferlavésel</nom>
+    <prénom>Vladimir</prénom>
+    <sexe>M</sexe>
+    <naissance >1942-12-30</naissance>
+    <numéroSS>198082205545842</numéroSS>
+    <adresse>
+        <rue>Les morets</rue>
+        <codePostal >38112</codePostal>
+        <ville>Méaudre</ville>
+    </adresse>
+    <visite date="2017-12-11">
+        <intervenant>
+            <nom>Fréchie</nom>
+            <prénom>Sarah</prénom>
+        </intervenant>
+        <acte>Ablation de fils ou d’agrafes, plus de dix, y compris le pansement éventuel.</acte>
+    </visite>
+    <visite date="2017-12-08">
+        <intervenant>
+            <nom>Fréchie</nom>
+            <prénom>Sarah</prénom>
+        </intervenant>
+        <acte>Séance hebdomadaire de surveillance clinique infirmière et de prévention par séance d’une demi-heure.</acte>
+    </visite>
+</patient>

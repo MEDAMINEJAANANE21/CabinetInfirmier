@@ -38,7 +38,7 @@
     
     <xsl:template match="med:patient">
         
-        <h3> Patient :<xsl:value-of select="med:nom"/><xsl:text> </xsl:text><xsl:value-of select="med:prénom"/></h3>
+        <h3> Patient : <xsl:value-of select="med:nom"/><xsl:text> </xsl:text><xsl:value-of select="med:prénom"/></h3>
         
         
         <xsl:variable name="adresse">
@@ -48,8 +48,8 @@
         
         <div class="patient-container">
            <ul>
-               <li>Sexe :<xsl:value-of select="med:sexe"/></li>
-               <li>Date de Naissance :<xsl:value-of select="med:naissance"/></li>
+               <li>Sexe : <xsl:value-of select="med:sexe"/></li>
+               <li>Date de Naissance : <xsl:value-of select="med:naissance"/></li>
                <li>NIR : <xsl:value-of select="@numéro"/></li>
                <li>Adresse : <xsl:apply-templates select="med:adresse"/></li>
            </ul>

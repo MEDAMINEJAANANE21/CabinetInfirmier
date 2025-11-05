@@ -1,0 +1,53 @@
+@startuml
+class Patient{
+nom : string
+prénom : string
+sexe : Sexe
+naissance : date
+numéroSS : NIR
+adresse : Adresse
+visite : Visites
+}
+enum Sexe {
+ M
+ F
+}
+
+class NIR <<pattern>>{
+<< [12]\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-8]\d|9[0-5]|99)\d{3}\d{3}\d{2} >>
+}
+class Adresse{
+rue : string
+codePostal : CodePostal
+ville : string
+}
+class CodePostal <<pattern>> {
+<< (0[1-9]|[1-9][0-9]|2A|2B|9[78])\d{3} >>
+}
+class Visites{
+intervenant : intervenant
+acte : string
+date : date {attribute}
+}
+class Intervenant{
+nom : string
+prénom : string
+}
+Patient *-- "1" Sexe
+Patient *-- "1" NIR
+Patient *-- "*" Visites
+Patient *-- "1" Adresse
+Adresse *-- "1" CodePostal
+Visites *-- "1" Intervenant
+
+ note left of Patient
+    <<racine>> Patient
+ end note
+
+
+
+
+
+
+
+@enduml

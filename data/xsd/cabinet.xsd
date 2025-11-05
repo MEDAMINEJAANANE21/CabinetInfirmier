@@ -126,7 +126,7 @@
         </restriction>
     </simpleType>
     
-    <!-- Type Sexe -->
+    <!-- Type Sexe : quand on a des restriction on utilise que des simpleType-->
     
     <simpleType name="Sexe">
         <restriction base="string">

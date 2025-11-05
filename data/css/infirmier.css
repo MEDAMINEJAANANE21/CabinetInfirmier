@@ -1,16 +1,192 @@
-th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    border-radius: 10px;
-    border-color: green;
-    background-color: salmon;
+/* Reset et base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-tr {
-    height: 100px;
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
 }
-td {
-    text-align: center;
+
+/* Container principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
+
+/* Message de bienvenue */
+.container > p:first-of-type {
+    font-size: 28px;
+    font-weight: bold;
+    color: #667eea;
+    margin-bottom: 10px;
+}
+
+.container > p:nth-of-type(2) {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+/* Titres des patients */
+h3 {
+    font-size: 24px;
+    color: #333;
+    margin: 30px 0 15px 0;
+    padding: 10px 15px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(102, 126, 234, 0.3);
+}
+
+h4 {
+    font-size: 18px;
+    color: #667eea;
+    margin: 20px 0 10px 0;
+    font-weight: 600;
+}
+
+/* Container de chaque patient */
+.patient-container {
+    background: #f8f9fa;
+    border-left: 4px solid #667eea;
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.patient-container:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Liste des informations patient */
+.patient-container > ul {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+.patient-container > ul > li {
+    padding: 8px 0;
+    font-size: 16px;
+    color: #555;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.patient-container > ul > li:last-child {
+    border-bottom: none;
+}
+
+.patient-container > ul > li::before {
+    content: "• ";
+    color: #667eea;
+    font-weight: bold;
+    font-size: 20px;
+    margin-right: 8px;
+}
+
+/* Tableau des soins */
 table {
-    width: 50%;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+th {
+    background: #667eea;
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+td {
+    padding: 15px 12px;
+    border-bottom: 1px solid #e0e0e0;
+    vertical-align: top;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover {
+    background: #f0f4ff;
+}
+
+/* Liste des actes */
+table ul {
+    list-style: none;
+    margin: 0;
+}
+
+table ul li {
+    padding: 5px 0;
+    color: #555;
+    font-size: 15px;
+}
+
+table ul li::before {
+    content: ". ";
+    color: #28a745;
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    .container > p:first-of-type {
+        font-size: 22px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    th, td {
+        padding: 10px 8px;
+    }
+}
+
+/* Animation de chargement */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.patient-container {
+    animation: fadeIn 0.5s ease-out;
 }
