@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><patient xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.univ-grenoble-alpes.fr/l3miage/patient" xs:schemaLocation="http://www.univ-grenoble-alpes.fr/l3miage/patient ../xsd/patient.xsd">
+    <nom>Bounoune</nom>
+    <prénom>Hiba</prénom>
+    <sexe>F</sexe>
+    <naissance>2004-04-14</naissance>
+    <numéroSS>206049935000375</numéroSS>
+    <adresse>
+        <rue>faure</rue>
+        <codePostal>38400</codePostal>
+        <ville>grenoble</ville>
+    </adresse>
+    <visite date="2025-10-14">
+        <intervenant>
+            <nom>jaanane</nom>
+            <prénom>amine</prénom>
+        </intervenant>
+        <acte> Prélèvement par ponction veineuse directe </acte>
+        <acte> Inection intraveineuse directe chez un enfant de moins de 5 ans. </acte>
+    </visite>
+</patient>
