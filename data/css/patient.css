@@ -1,282 +1,269 @@
-/* Reset et base */
-* {
+/* Dossier patient : feuille générée par data/xslt/patienthtml.xsl */
+
+:root {
+    --fond: #f7f4ee;
+    --carte: #fdfbf7;
+    --releve: #efe9df;
+    --trait: rgba(31, 27, 22, 0.08);
+    --texte: #1f1b16;
+    --texte-2: #5e554a;
+    --texte-3: #7b7266;
+    --accent: #0f766e;
+    --ombre: 0 1px 2px rgba(0, 0, 0, 0.04);
+
+    --police: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+    color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --fond: #161513;
+        --carte: #1c1a18;
+        --releve: #262421;
+        --trait: rgba(239, 233, 222, 0.08);
+        --texte: #efe9de;
+        --texte-2: #aaa398;
+        --texte-3: #8a847a;
+        --accent: #5fc4b6;
+        --ombre: none;
+    }
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
-    padding: 30px;
-    color: #333;
+    font-family: var(--police);
+    font-size: 15px;
+    line-height: 22px;
+    color: var(--texte);
+    background: var(--fond);
+    -webkit-font-smoothing: antialiased;
 }
 
-/* Container principal */
-.container {
-    max-width: 1000px;
+.page {
+    max-width: 880px;
     margin: 0 auto;
-    background: white;
-    border-radius: 20px;
-    padding: 40px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    animation: fadeInUp 0.6s ease-out;
-}
-.milieuEcriture{
-    background-color: white;
-    text-align: center;
-    margin: 30px;
-    
-}
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    padding: 64px 24px 96px;
 }
 
-/* Informations patient */
-.container > ul {
-    list-style: none;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    padding: 30px;
-    border-radius: 15px;
-    margin-bottom: 30px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+/* En-tête du dossier */
+
+.entete {
+    margin-bottom: 32px;
 }
 
-.container > ul > li {
-    padding: 12px 20px;
-    margin: 8px 0;
-    background: white;
-    border-radius: 10px;
-    font-size: 16px;
-    color: #444;
+.surtitre {
+    margin-bottom: 8px;
+    font-size: 13px;
+    line-height: 20px;
+    color: var(--texte-3);
+}
+
+h1 {
+    font-size: 32px;
+    line-height: 1.15;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+}
+
+.nir {
+    margin-top: 8px;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 20px;
+    color: var(--texte-2);
+    font-variant-numeric: tabular-nums;
+}
+
+/* Blocs */
+
+.bloc {
+    padding: 24px;
+    background: var(--carte);
+    border: 1px solid var(--trait);
+    border-radius: 16px;
+    box-shadow: var(--ombre);
+}
+
+.bloc + .bloc {
+    margin-top: 16px;
+}
+
+.bloc-titre {
     display: flex;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
 }
 
-.container > ul > li:hover {
-    transform: translateX(10px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+h2 {
+    margin-bottom: 16px;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 500;
 }
 
-.container > ul > li::before {
-    content: "●";
-    color: #667eea;
-    font-size: 24px;
-    margin-right: 15px;
-    font-weight: bold;
-    flex-shrink: 0;
+.compte {
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--texte-3);
 }
 
-/* Titre section visite */
-h4 {
-    font-size: 24px;
-    color: #667eea;
-    margin: 30px 0 15px 0;
-    padding-bottom: 10px;
-    border-bottom: 3px solid #667eea;
-    font-weight: 600;
+.fiche {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 8px 16px;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.fiche dt {
+    color: var(--texte-3);
 }
 
 /* Tableau des visites */
+
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    line-height: 20px;
 }
 
 th {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 15px;
+    padding: 8px 16px 8px 0;
     text-align: left;
-    font-weight: 600;
-    font-size: 16px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 400;
+    color: var(--texte-3);
+    border-bottom: 1px solid var(--trait);
 }
 
 td {
-    padding: 18px 15px;
-    border-bottom: 1px solid #e8e8e8;
-    color: #555;
-    font-size: 15px;
+    padding: 12px 16px 12px 0;
     vertical-align: top;
+    border-bottom: 1px solid var(--trait);
 }
 
-tr:last-child td {
+th:last-child,
+td:last-child {
+    padding-right: 0;
+}
+
+tbody tr:last-child td {
+    padding-bottom: 0;
     border-bottom: none;
 }
 
-tr {
-    transition: all 0.3s ease;
-}
-
-tr:hover {
-    background: linear-gradient(90deg, #f0f4ff 0%, #fef5ff 100%);
-}
-
-/* Liste des actes DANS le tableau */
-td ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-td ul li {
-    padding: 8px 0 8px 25px;
-    position: relative;
-    color: #555;
-    line-height: 1.6;
-}
-
-td ul li::before {
-    content: "●";
-    color: #28a745;
-    font-weight: bold;
-    position: absolute;
-    left: 0;
-    font-size: 16px;
-}
-
-/* Si plusieurs actes dans une visite */
-td ul li + li {
-    border-top: 1px dashed #e0e0e0;
-    padding-top: 12px;
-    margin-top: 8px;
-}
-
-/* Colonne Date */
+th:first-child,
 td:first-child {
-    font-weight: 600;
-    color: #667eea;
+    width: 128px;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+    width: 176px;
+}
+
+.date {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--texte-2);
+    font-variant-numeric: tabular-nums;
     white-space: nowrap;
 }
 
-/* Colonne Intervenant */
-td:nth-child(2) {
-    font-weight: 500;
-    color: #444;
+.intervenant {
+    color: var(--texte);
 }
 
-/* Colonnes Actes (peut y en avoir plusieurs) */
-td:nth-child(n+3) {
-    background: #f9f9f9;
-    font-style: italic;
+.actes {
+    display: grid;
+    gap: 8px;
+    list-style: none;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    body {
-        padding: 15px;
+/* Petits écrans */
+
+@media (max-width: 600px) {
+    .page {
+        padding: 40px 16px 64px;
     }
 
-    .container {
-        padding: 25px;
-        border-radius: 15px;
+    h1 {
+        font-size: 28px;
     }
 
-    .container > ul {
+    .bloc {
         padding: 20px;
+        border-radius: 12px;
     }
 
-    .container > ul > li {
-        font-size: 14px;
-        padding: 10px 15px;
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .container > ul > li::before {
-        margin-bottom: 5px;
-    }
-
-    h4 {
-        font-size: 20px;
-    }
-
-    /* Tableau responsive - mode carte */
-    table {
-        font-size: 13px;
+    .fiche {
+        grid-template-columns: 80px 1fr;
     }
 
     thead {
         display: none;
     }
 
-    tr {
-        display: block;
-        margin-bottom: 20px;
-        border: 2px solid #667eea;
-        border-radius: 10px;
-        background: white;
-    }
-
+    tr,
     td {
         display: block;
-        text-align: left;
-        padding: 12px 15px;
-        border: none;
-        border-bottom: 1px solid #f0f0f0;
     }
 
-    td:last-child {
+    td,
+    th:first-child,
+    td:first-child,
+    td:nth-child(2) {
+        width: auto;
+        padding: 0;
         border-bottom: none;
     }
 
-    td::before {
-        content: attr(data-label);
-        font-weight: bold;
-        color: #667eea;
-        display: block;
-        margin-bottom: 5px;
-        text-transform: uppercase;
-        font-size: 12px;
+    td:first-child {
+        padding-top: 12px;
     }
 
-    td:first-child::before {
-        content: "Date : ";
+    td:nth-child(2) {
+        margin: 4px 0 8px;
+        color: var(--texte-2);
     }
 
-    td:nth-child(2)::before {
-        content: "Intervenant : ";
+    tbody tr {
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--trait);
     }
 
-    td:nth-child(n+3)::before {
-        content: "Acte : ";
-    }
-
-    td:nth-child(n+3) {
-        background: #f5f5f5;
-        border-radius: 8px;
-        margin: 5px 10px;
+    tbody tr:last-child {
+        padding-bottom: 0;
+        border-bottom: none;
     }
 }
 
-/* Animation douce */
-@keyframes pulse {
-    0%, 100% {
-        opacity: 1;
+@media print {
+    :root {
+        --fond: #ffffff;
+        --carte: #ffffff;
+        --ombre: none;
     }
-    50% {
-        opacity: 0.95;
-    }
-}
 
-.container > ul:hover,
-table:hover {
-    animation: pulse 2s ease-in-out;
+    .page {
+        max-width: none;
+        padding: 0;
+    }
+
+    .bloc {
+        break-inside: avoid;
+    }
 }

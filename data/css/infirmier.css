@@ -1,192 +1,291 @@
-/* Reset et base */
-* {
+/* Tournée de l'infirmier : feuille générée par data/xslt/cabinet.xsl */
+
+:root {
+    --fond: #f7f4ee;
+    --carte: #fdfbf7;
+    --releve: #efe9df;
+    --trait: rgba(31, 27, 22, 0.08);
+    --texte: #1f1b16;
+    --texte-2: #5e554a;
+    --texte-3: #7b7266;
+    --accent: #0f766e;
+    --accent-fond: rgba(15, 118, 110, 0.07);
+    --accent-trait: rgba(15, 118, 110, 0.2);
+    --ombre: 0 1px 2px rgba(0, 0, 0, 0.04);
+
+    --police: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+    color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --fond: #161513;
+        --carte: #1c1a18;
+        --releve: #262421;
+        --trait: rgba(239, 233, 222, 0.08);
+        --texte: #efe9de;
+        --texte-2: #aaa398;
+        --texte-3: #8a847a;
+        --accent: #5fc4b6;
+        --accent-fond: rgba(95, 196, 182, 0.1);
+        --accent-trait: rgba(95, 196, 182, 0.24);
+        --ombre: none;
+    }
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
-    padding: 20px;
-    color: #333;
+    font-family: var(--police);
+    font-size: 15px;
+    line-height: 22px;
+    color: var(--texte);
+    background: var(--fond);
+    -webkit-font-smoothing: antialiased;
 }
 
-/* Container principal */
-.container {
-    max-width: 1200px;
+.page {
+    max-width: 880px;
     margin: 0 auto;
-    background: white;
-    border-radius: 15px;
-    padding: 40px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    padding: 64px 24px 96px;
 }
 
-/* Message de bienvenue */
-.container > p:first-of-type {
-    font-size: 28px;
-    font-weight: bold;
-    color: #667eea;
-    margin-bottom: 10px;
+/* En-tête de la tournée */
+
+.entete {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--trait);
 }
 
-.container > p:nth-of-type(2) {
+.surtitre {
+    margin-bottom: 8px;
+    font-size: 13px;
+    line-height: 20px;
+    color: var(--texte-3);
+}
+
+h1 {
+    font-size: 32px;
+    line-height: 1.15;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+}
+
+.resume {
+    margin-top: 8px;
+    color: var(--texte-2);
+}
+
+.resume strong {
+    font-weight: 500;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+}
+
+/* Fiches patient */
+
+.patients {
+    display: grid;
+    gap: 16px;
+}
+
+.patient {
+    padding: 24px;
+    background: var(--carte);
+    border: 1px solid var(--trait);
+    border-radius: 16px;
+    box-shadow: var(--ombre);
+}
+
+.patient-entete {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 4px 16px;
+    margin-bottom: 16px;
+}
+
+h2 {
     font-size: 18px;
-    color: #666;
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid #e0e0e0;
+    line-height: 24px;
+    font-weight: 500;
 }
 
-/* Titres des patients */
+.nir {
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--texte-3);
+    font-variant-numeric: tabular-nums;
+}
+
+.fiche {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 4px 16px;
+    margin-bottom: 24px;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.fiche dt {
+    color: var(--texte-3);
+}
+
 h3 {
-    font-size: 24px;
-    color: #333;
-    margin: 30px 0 15px 0;
-    padding: 10px 15px;
-    background: linear-gradient(90deg, #667eea, #764ba2);
-    color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(102, 126, 234, 0.3);
-}
-
-h4 {
-    font-size: 18px;
-    color: #667eea;
-    margin: 20px 0 10px 0;
-    font-weight: 600;
-}
-
-/* Container de chaque patient */
-.patient-container {
-    background: #f8f9fa;
-    border-left: 4px solid #667eea;
-    padding: 20px;
-    margin-bottom: 25px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.patient-container:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-}
-
-/* Liste des informations patient */
-.patient-container > ul {
-    list-style: none;
-    margin-bottom: 20px;
-}
-
-.patient-container > ul > li {
-    padding: 8px 0;
-    font-size: 16px;
-    color: #555;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.patient-container > ul > li:last-child {
-    border-bottom: none;
-}
-
-.patient-container > ul > li::before {
-    content: "• ";
-    color: #667eea;
-    font-weight: bold;
-    font-size: 20px;
-    margin-right: 8px;
+    margin-bottom: 4px;
+    font-size: 13px;
+    line-height: 20px;
+    font-weight: 500;
+    color: var(--texte-2);
 }
 
 /* Tableau des soins */
+
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 15px;
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    line-height: 20px;
 }
 
 th {
-    background: #667eea;
-    color: white;
-    padding: 12px;
+    padding: 8px 0;
     text-align: left;
-    font-weight: 600;
-    font-size: 16px;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 400;
+    color: var(--texte-3);
+    border-bottom: 1px solid var(--trait);
 }
 
 td {
-    padding: 15px 12px;
-    border-bottom: 1px solid #e0e0e0;
+    padding: 12px 0;
     vertical-align: top;
+    border-bottom: 1px solid var(--trait);
 }
 
-tr:last-child td {
+tbody tr:last-child td {
+    padding-bottom: 0;
     border-bottom: none;
 }
 
-tr:hover {
-    background: #f0f4ff;
+th:first-child,
+td:first-child {
+    width: 128px;
+    padding-right: 16px;
 }
 
-/* Liste des actes */
-table ul {
+.date {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--texte-2);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.actes {
+    display: grid;
+    gap: 8px;
     list-style: none;
-    margin: 0;
 }
 
-table ul li {
-    padding: 5px 0;
-    color: #555;
-    font-size: 15px;
+.actes li {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
 }
 
-table ul li::before {
-    content: ". ";
-    color: #28a745;
-    font-weight: bold;
-    margin-right: 8px;
+/* Signature : le code NGAP de chaque acte */
+.code {
+    flex: none;
+    min-width: 120px;
+    padding: 2px 6px;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--accent);
+    background: var(--accent-fond);
+    border: 1px solid var(--accent-trait);
+    border-radius: 4px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .container {
+/* Petits écrans */
+
+@media (max-width: 600px) {
+    .page {
+        padding: 40px 16px 64px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .patient {
         padding: 20px;
+        border-radius: 12px;
     }
 
-    .container > p:first-of-type {
-        font-size: 22px;
+    .fiche {
+        grid-template-columns: 80px 1fr;
     }
 
-    h3 {
-        font-size: 20px;
+    thead {
+        display: none;
     }
 
-    table {
-        font-size: 14px;
+    tr,
+    td {
+        display: block;
     }
 
-    th, td {
-        padding: 10px 8px;
+    td:first-child {
+        width: auto;
+        padding: 12px 0 8px;
+        border-bottom: none;
+    }
+
+    td:last-child {
+        padding-top: 0;
+    }
+
+    .actes li {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .code {
+        min-width: 0;
     }
 }
 
-/* Animation de chargement */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+/* Impression de la feuille de tournée */
 
-.patient-container {
-    animation: fadeIn 0.5s ease-out;
+@media print {
+    :root {
+        --fond: #ffffff;
+        --carte: #ffffff;
+        --ombre: none;
+    }
+
+    .page {
+        max-width: none;
+        padding: 0;
+    }
+
+    .patient {
+        break-inside: avoid;
+    }
 }

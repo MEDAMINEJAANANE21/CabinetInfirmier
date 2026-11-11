@@ -1,34 +1,49 @@
-<html xmlns:pat="http://www.univ-grenoble-alpes.fr/l3miage/patient">
-    <head>
-        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>page fantastique</title>
-        <link rel="stylesheet" href="/data/css/patient.css">
-    </head>
-    <body>
-        <div class="milieuEcriture">
-            <h4>Information du patient :</h4>
-        </div>
-        <div class="container">
-            <ul>
-                <li>Nom : Bounoune</li>
-                <li>Pr&eacute;nom : Hiba</li>
-                <li>Sexe : F</li>
-                <li>Naissance : 2004-04-14</li>
-                <li>Num&eacute;roSS : 206049935000375</li>
-                <li>Adresse : faure,  38400 grenoble</li>
-            </ul>
-            <h4>Visites :</h4>
-            <table>
-                <th>Date </th><th> Intervenant</th><th>Acte</th>
-                <tr>
-                    <td>2025-10-14</td><td>jaanane amine</td><td>
-                        <ul>
-                            <li> Pr&eacute;l&egrave;vement par ponction veineuse directe </li>
-                            <li> Inection intraveineuse directe chez un enfant de moins de 5 ans. </li>
-                        </ul>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </body>
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="fr">
+  <head>
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dossier patient</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500&amp;display=swap">
+    <link rel="stylesheet" href="../css/patient.css">
+  </head>
+  <body><main class="page"><header class="entete"><p class="surtitre">Dossier patient</p>
+        <h1>Hiba Bounoune</h1>
+        <p class="nir">NIR 206049935000375</p></header><section class="bloc"><h2>Informations</h2>
+        <dl class="fiche">
+          <dt>Nom</dt>
+          <dd>Bounoune</dd>
+          <dt>Prénom</dt>
+          <dd>Hiba</dd>
+          <dt>Sexe</dt>
+          <dd>F</dd>
+          <dt>Naissance</dt>
+          <dd><time datetime="2004-04-14">14/04/2004</time></dd>
+          <dt>Adresse</dt>
+          <dd>faure, 38400 grenoble</dd>
+        </dl></section><section class="bloc"><div class="bloc-titre">
+          <h2>Visites</h2><span class="compte">1 visite</span></div>
+        <table class="visites">
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Intervenant</th>
+              <th scope="col">Actes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="date"><time datetime="2025-10-14">14/10/2025</time></td>
+              <td class="intervenant">amine jaanane</td>
+              <td>
+                <ul class="actes">
+                  <li>Prélèvement par ponction veineuse directe</li>
+                  <li>Inection intraveineuse directe chez un enfant de moins de 5 ans.</li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table></section></main></body>
 </html>

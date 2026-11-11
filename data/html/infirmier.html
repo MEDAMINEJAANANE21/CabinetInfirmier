@@ -1,95 +1,121 @@
-<html xmlns:act="http://www.univ-grenoble-alpes.fr/l3miage/actes" xmlns:med="http://www.univ-grenoble-alpes.fr/l3miage/medical">
-    <head>
-        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Page de l'Infirmier</title>
-        <link rel="stylesheet" href="/data/css/infirmier.css">
-        <script type="text/javascript" src="../js/buttonScript.js"></script>
-    </head>
-    <body>
-        <div class="container">
-            <p>Bonjour amine , </p>
-            <p>Aujourd'hui, vous avez 4 patient(s).</p>
-            <h3> Patient : Bounoune Hiba</h3>
-            <div class="patient-container">
-                <ul>
-                    <li>Sexe :F</li>
-                    <li>Date de Naissance :2004-04-14</li>
-                    <li>NIR : 206049935000375</li>
-                    <li>Adresse : 55 faure, 38400 grenoble</li>
-                </ul>
-                <h4>Soin a effectuer:</h4>
-                <table>
-                    <th>Date de Visite</th><th> Actes</th>
-                    <tr>
-                        <td>2025-10-14</td><td>
-                            <ul>
-                                <li> Pr&eacute;l&egrave;vement par ponction veineuse directe </li>
-                            </ul>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <h3> Patient : Orouge Elvira</h3>
-            <div class="patient-container">
-                <ul>
-                    <li>Sexe :F</li>
-                    <li>Date de Naissance :1982-03-08</li>
-                    <li>NIR : 282036912305243</li>
-                    <li>Adresse :  Rond-Point de la Croix de Vie, 38700 La Tronche</li>
-                </ul>
-                <h4>Soin a effectuer:</h4>
-                <table>
-                    <th>Date de Visite</th><th> Actes</th>
-                    <tr>
-                        <td>2015-12-08</td><td>
-                            <ul>
-                                <li> Inection intraveineuse directe isol&eacute;e. </li>
-                            </ul>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <h3> Patient : Pien Oscare</h3>
-            <div class="patient-container">
-                <ul>
-                    <li>Sexe :M</li>
-                    <li>Date de Naissance :1975-03-25</li>
-                    <li>NIR : 175037306569237</li>
-                    <li>Adresse :  rue Casimir Brenier, 38000 Grenoble</li>
-                </ul>
-                <h4>Soin a effectuer:</h4>
-                <table>
-                    <th>Date de Visite</th><th> Actes</th>
-                    <tr>
-                        <td>2015-12-08</td><td>
-                            <ul>
-                                <li> Pr&eacute;l&egrave;vement par ponction veineuse directe </li>
-                                <li> Injection intraveineuse directe en s&eacute;rie. </li>
-                            </ul>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <h3> Patient :Kapo&euml;tla  Xavier</h3>
-            <div class="patient-container">
-                <ul>
-                    <li>Sexe :M</li>
-                    <li>Date de Naissance :2011-08-02</li>
-                    <li>NIR : 111083306303521</li>
-                    <li>Adresse :  25 rue des Martyrs, 38042 Grenoble</li>
-                </ul>
-                <h4>Soin a effectuer:</h4>
-                <table>
-                    <th>Date de Visite</th><th> Actes</th>
-                    <tr>
-                        <td>2015-12-08</td><td>
-                            <ul>
-                                <li> Inection intraveineuse directe chez un enfant de moins de 5 ans. </li>
-                            </ul>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </body>
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="fr">
+  <head>
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tournée de l'infirmier</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500&amp;display=swap">
+    <link rel="stylesheet" href="../css/infirmier.css">
+  </head>
+  <body><main class="page"><header class="entete"><p class="surtitre">jaananeCabinet · 55 allee, 38400 grenoble</p>
+        <h1>Patients à voir</h1>
+        <p class="resume">amine jaanane · <strong>4</strong> patients</p></header><div class="patients"><section class="patient"><header class="patient-entete"><h2>Bounoune Hiba</h2><span class="nir">NIR 206049935000375</span></header><dl class="fiche">
+            <dt>Sexe</dt>
+            <dd>F</dd>
+            <dt>Naissance</dt>
+            <dd><time datetime="2004-04-14">14/04/2004</time></dd>
+            <dt>Adresse</dt>
+            <dd>55 faure, 38400 grenoble, étage 4</dd>
+          </dl>
+          <h3>Soins à effectuer</h3>
+          <table class="soins">
+            <thead>
+              <tr>
+                <th scope="col">Date de visite</th>
+                <th scope="col">Actes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="date"><time datetime="2025-10-14">14/10/2025</time></td>
+                <td>
+                  <ul class="actes">
+                    <li><span class="code">101 · AMI 1,5</span><span class="intitule">Prélèvement par ponction veineuse directe</span></li>
+                    <li><span class="code">106 · AMI 2</span><span class="intitule">Inection intraveineuse directe chez un enfant de moins de 5 ans.</span></li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table></section><section class="patient"><header class="patient-entete"><h2>Orouge Elvira</h2><span class="nir">NIR 282036912305243</span></header><dl class="fiche">
+            <dt>Sexe</dt>
+            <dd>F</dd>
+            <dt>Naissance</dt>
+            <dd><time datetime="1982-03-08">08/03/1982</time></dd>
+            <dt>Adresse</dt>
+            <dd>Rond-Point de la Croix de Vie, 38700 La Tronche</dd>
+          </dl>
+          <h3>Soins à effectuer</h3>
+          <table class="soins">
+            <thead>
+              <tr>
+                <th scope="col">Date de visite</th>
+                <th scope="col">Actes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="date"><time datetime="2015-12-08">08/12/2015</time></td>
+                <td>
+                  <ul class="actes">
+                    <li><span class="code">104 · AMI 2</span><span class="intitule">Inection intraveineuse directe isolée.</span></li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table></section><section class="patient"><header class="patient-entete"><h2>Pien Oscare</h2><span class="nir">NIR 175037306569237</span></header><dl class="fiche">
+            <dt>Sexe</dt>
+            <dd>M</dd>
+            <dt>Naissance</dt>
+            <dd><time datetime="1975-03-25">25/03/1975</time></dd>
+            <dt>Adresse</dt>
+            <dd>rue Casimir Brenier, 38000 Grenoble</dd>
+          </dl>
+          <h3>Soins à effectuer</h3>
+          <table class="soins">
+            <thead>
+              <tr>
+                <th scope="col">Date de visite</th>
+                <th scope="col">Actes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="date"><time datetime="2015-12-08">08/12/2015</time></td>
+                <td>
+                  <ul class="actes">
+                    <li><span class="code">101 · AMI 1,5</span><span class="intitule">Prélèvement par ponction veineuse directe</span></li>
+                    <li><span class="code">105 · AMI 1,5</span><span class="intitule">Injection intraveineuse directe en série.</span></li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table></section><section class="patient"><header class="patient-entete"><h2>Kapoëtla Xavier</h2><span class="nir">NIR 111083306303521</span></header><dl class="fiche">
+            <dt>Sexe</dt>
+            <dd>M</dd>
+            <dt>Naissance</dt>
+            <dd><time datetime="2011-08-02">02/08/2011</time></dd>
+            <dt>Adresse</dt>
+            <dd>25 rue des Martyrs, 38042 Grenoble</dd>
+          </dl>
+          <h3>Soins à effectuer</h3>
+          <table class="soins">
+            <thead>
+              <tr>
+                <th scope="col">Date de visite</th>
+                <th scope="col">Actes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="date"><time datetime="2015-12-08">08/12/2015</time></td>
+                <td>
+                  <ul class="actes">
+                    <li><span class="code">106 · AMI 2</span><span class="intitule">Inection intraveineuse directe chez un enfant de moins de 5 ans.</span></li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table></section></div></main></body>
 </html>
