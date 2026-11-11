@@ -1,0 +1,83 @@
+/* Facture d'un patient (data/xslt/facture.xsl) ; la base est dans commun.css */
+
+.parties {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--trait);
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.parties h2 {
+    margin-bottom: 8px;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 400;
+    color: var(--texte-3);
+}
+
+.parties p + p {
+    margin-top: 2px;
+}
+
+.lignes th:first-child,
+.lignes td:first-child {
+    width: 112px;
+}
+
+.acte-intitule {
+    display: block;
+}
+
+.acte-intitule .mono {
+    margin-right: 4px;
+    font-size: 13px;
+    color: var(--accent);
+}
+
+.acte-type {
+    display: block;
+    margin-top: 2px;
+    font-size: 13px;
+    color: var(--texte-3);
+}
+
+.lignes td.nombre {
+    font-family: var(--mono);
+    font-size: 13px;
+}
+
+.lignes tfoot th,
+.lignes tfoot td {
+    padding-top: 16px;
+    border-top: 1px solid var(--trait-fort);
+    border-bottom: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--texte);
+    text-align: right;
+}
+
+.lignes tfoot td.total {
+    font-size: 16px;
+}
+
+.note {
+    margin-top: 24px;
+    font-size: 13px;
+    line-height: 20px;
+    color: var(--texte-3);
+}
+
+@media (max-width: 600px) {
+    .parties {
+        grid-template-columns: 1fr;
+    }
+
+    .lignes {
+        min-width: 560px;
+    }
+}

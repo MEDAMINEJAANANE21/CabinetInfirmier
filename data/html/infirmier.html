@@ -7,11 +7,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="../css/commun.css">
 <link rel="stylesheet" href="../css/infirmier.css">
 </head>
-<body><main class="page"><nav class="nav" aria-label="Navigation"><a href="infirmier.html" aria-current="page">Tournée</a><a href="../xml/cabinet.xml">Données XML</a></nav><header class="entete"><p class="surtitre">jaananeCabinet · 55 allee, 38400 grenoble</p>
+<body>
+<header class="barre"><div class="barre-contenu">
+<a class="marque" href="index.html">jaananeCabinet</a><nav class="nav" aria-label="Navigation principale"><a href="index.html">Tableau de bord</a><a href="infirmier.html" aria-current="page">Tournée</a><a href="nomenclature.html">Nomenclature</a><a href="../xml/cabinet.xml">Données XML</a></nav>
+</div></header><main class="page"><header class="entete"><p class="surtitre">Infirmier 001</p>
 <h1>Patients à voir</h1>
-<p class="resume">amine jaanane · <strong>4</strong> patients</p></header><div class="patients">
+<p class="resume">amine jaanane · <strong>4</strong> patients · 6 actes · 33,09 €</p></header><div class="patients">
 <section class="patient"><header class="patient-entete"><h2><a href="patient-206049935000375.html">Bounoune Hiba</a></h2>
 <span class="nir">NIR 206049935000375</span></header><dl class="fiche">
 <dt>Sexe</dt>
@@ -26,6 +30,7 @@
 <thead><tr>
 <th scope="col">Date de visite</th>
 <th scope="col">Actes</th>
+<th scope="col" class="montant">Tarif</th>
 </tr></thead>
 <tbody><tr>
 <td class="date"><time datetime="2025-10-14">14/10/2025</time></td>
@@ -37,8 +42,10 @@
 <span class="code">106 · AMI 2</span><span class="intitule">Inection intraveineuse directe chez un enfant de moins de 5 ans.</span>
 </li>
 </ul></td>
+<td class="montant">11,03 €</td>
 </tr></tbody>
-</table></section><section class="patient"><header class="patient-entete"><h2><a href="patient-282036912305243.html">Orouge Elvira</a></h2>
+</table>
+<footer class="patient-pied"><a href="patient-206049935000375.html">Dossier</a><a href="facture-206049935000375.html">Facture</a></footer></section><section class="patient"><header class="patient-entete"><h2><a href="patient-282036912305243.html">Orouge Elvira</a></h2>
 <span class="nir">NIR 282036912305243</span></header><dl class="fiche">
 <dt>Sexe</dt>
 <dd>F</dd>
@@ -52,14 +59,17 @@
 <thead><tr>
 <th scope="col">Date de visite</th>
 <th scope="col">Actes</th>
+<th scope="col" class="montant">Tarif</th>
 </tr></thead>
 <tbody><tr>
 <td class="date"><time datetime="2015-12-08">08/12/2015</time></td>
 <td><ul class="actes"><li>
 <span class="code">104 · AMI 2</span><span class="intitule">Inection intraveineuse directe isolée.</span>
 </li></ul></td>
+<td class="montant">6,30 €</td>
 </tr></tbody>
-</table></section><section class="patient"><header class="patient-entete"><h2><a href="patient-175037306569237.html">Pien Oscare</a></h2>
+</table>
+<footer class="patient-pied"><a href="patient-282036912305243.html">Dossier</a><a href="facture-282036912305243.html">Facture</a></footer></section><section class="patient"><header class="patient-entete"><h2><a href="patient-175037306569237.html">Pien Oscare</a></h2>
 <span class="nir">NIR 175037306569237</span></header><dl class="fiche">
 <dt>Sexe</dt>
 <dd>M</dd>
@@ -73,6 +83,7 @@
 <thead><tr>
 <th scope="col">Date de visite</th>
 <th scope="col">Actes</th>
+<th scope="col" class="montant">Tarif</th>
 </tr></thead>
 <tbody><tr>
 <td class="date"><time datetime="2015-12-08">08/12/2015</time></td>
@@ -84,8 +95,10 @@
 <span class="code">105 · AMI 1,5</span><span class="intitule">Injection intraveineuse directe en série.</span>
 </li>
 </ul></td>
+<td class="montant">9,46 €</td>
 </tr></tbody>
-</table></section><section class="patient"><header class="patient-entete"><h2><a href="patient-111083306303521.html">Kapoëtla Xavier</a></h2>
+</table>
+<footer class="patient-pied"><a href="patient-175037306569237.html">Dossier</a><a href="facture-175037306569237.html">Facture</a></footer></section><section class="patient"><header class="patient-entete"><h2><a href="patient-111083306303521.html">Kapoëtla Xavier</a></h2>
 <span class="nir">NIR 111083306303521</span></header><dl class="fiche">
 <dt>Sexe</dt>
 <dd>M</dd>
@@ -99,13 +112,17 @@
 <thead><tr>
 <th scope="col">Date de visite</th>
 <th scope="col">Actes</th>
+<th scope="col" class="montant">Tarif</th>
 </tr></thead>
 <tbody><tr>
 <td class="date"><time datetime="2015-12-08">08/12/2015</time></td>
 <td><ul class="actes"><li>
 <span class="code">106 · AMI 2</span><span class="intitule">Inection intraveineuse directe chez un enfant de moins de 5 ans.</span>
 </li></ul></td>
+<td class="montant">6,30 €</td>
 </tr></tbody>
-</table></section>
-</div></main></body>
+</table>
+<footer class="patient-pied"><a href="patient-111083306303521.html">Dossier</a><a href="facture-111083306303521.html">Facture</a></footer></section>
+</div></main>
+</body>
 </html>

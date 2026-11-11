@@ -7,11 +7,20 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="../css/commun.css">
 <link rel="stylesheet" href="../css/patient.css">
 </head>
-<body><main class="page"><nav class="nav" aria-label="Navigation"><a href="infirmier.html">Retour à la tournée</a><a href="../xml/cabinet.xml">Données XML</a></nav><header class="entete"><p class="surtitre">Dossier patient</p>
+<body>
+<header class="barre"><div class="barre-contenu">
+<a class="marque" href="index.html">jaananeCabinet</a><nav class="nav" aria-label="Navigation principale"><a href="index.html">Tableau de bord</a><a href="infirmier.html">Tournée</a><a href="nomenclature.html">Nomenclature</a><a href="../xml/cabinet.xml">Données XML</a></nav>
+</div></header><main class="page"><header class="entete entete-actions"><div>
+<p class="surtitre">Dossier patient</p>
 <h1>Hiba Bounoune</h1>
-<p class="nir">NIR 206049935000375</p></header><section class="bloc"><h2>Informations</h2>
+<p class="nir">NIR 206049935000375</p>
+</div>
+<div class="actions">
+<a class="bouton bouton-secondaire" href="infirmier.html">Tournée</a><a class="bouton" href="facture-206049935000375.html">Facture</a>
+</div></header><section class="carte"><h2>Informations</h2>
 <dl class="fiche">
 <dt>Nom</dt>
 <dd>Bounoune</dd>
@@ -23,11 +32,11 @@
 <dd><time datetime="2004-04-14">14/04/2004</time></dd>
 <dt>Adresse</dt>
 <dd>faure, 38400 grenoble</dd>
-</dl></section><section class="bloc"><div class="bloc-titre">
+</dl></section><section class="carte"><div class="carte-titre">
 <h2>Visites</h2>
-<span class="compte">1 visite</span>
+<span class="meta">1 visite</span>
 </div>
-<table class="visites">
+<div class="defilement"><table class="visites">
 <thead><tr>
 <th scope="col">Date</th>
 <th scope="col">Intervenant</th>
@@ -37,9 +46,14 @@
 <td class="date"><time datetime="2025-10-14">14/10/2025</time></td>
 <td class="intervenant">amine jaanane</td>
 <td><ul class="actes">
-<li>Prélèvement par ponction veineuse directe</li>
-<li>Inection intraveineuse directe chez un enfant de moins de 5 ans.</li>
+<li>
+<span class="code">101 · AMI 1,5</span><span class="intitule">Prélèvement par ponction veineuse directe</span>
+</li>
+<li>
+<span class="code">106 · AMI 2</span><span class="intitule">Inection intraveineuse directe chez un enfant de moins de 5 ans.</span>
+</li>
 </ul></td>
 </tr></tbody>
-</table></section></main></body>
+</table></div></section></main>
+</body>
 </html>

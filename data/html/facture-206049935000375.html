@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Facture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="../css/commun.css">
+<link rel="stylesheet" href="../css/facture.css">
+</head>
+<body>
+<header class="barre"><div class="barre-contenu">
+<a class="marque" href="index.html">jaananeCabinet</a><nav class="nav" aria-label="Navigation principale"><a href="index.html">Tableau de bord</a><a href="infirmier.html">Tournée</a><a href="nomenclature.html">Nomenclature</a><a href="../xml/cabinet.xml">Données XML</a></nav>
+</div></header><main class="page"><header class="entete entete-actions"><div>
+<p class="surtitre">Facture</p>
+<h1>Hiba Bounoune</h1>
+</div>
+<div class="actions">
+<a class="bouton bouton-secondaire" href="patient-206049935000375.html">Dossier du patient</a><button class="bouton" type="button" onclick="window.print()">Imprimer</button>
+</div></header><section class="carte"><div class="parties">
+<div>
+<h2>Cabinet</h2>
+<p>jaananeCabinet</p>
+<p class="secondaire">55 allee, 38400 grenoble</p>
+<p class="secondaire">Infirmier amine jaanane (001)</p>
+</div>
+<div>
+<h2>Patient</h2>
+<p>Bounoune Hiba</p>
+<p class="secondaire">55 faure, 38400 grenoble, étage 4</p>
+<p class="secondaire mono">NIR 206049935000375</p>
+</div>
+</div>
+<div class="defilement"><table class="lignes">
+<thead><tr>
+<th scope="col">Date</th>
+<th scope="col">Acte</th>
+<th scope="col" class="nombre">Clé</th>
+<th scope="col" class="nombre">Coef</th>
+<th scope="col" class="nombre">Tarif</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="date"><time datetime="2025-10-14">14/10/2025</time></td>
+<td>
+<span class="acte-intitule"><span class="mono">101</span> Prélèvement par ponction veineuse directe</span><span class="acte-type">prélèvements et injections</span>
+</td>
+<td class="nombre">AMI</td>
+<td class="nombre">1,5</td>
+<td class="nombre">4,73 €</td>
+</tr>
+<tr>
+<td class="date"><time datetime="2025-10-14">14/10/2025</time></td>
+<td>
+<span class="acte-intitule"><span class="mono">106</span> Inection intraveineuse directe chez un enfant de moins de 5 ans.</span><span class="acte-type">prélèvements et injections</span>
+</td>
+<td class="nombre">AMI</td>
+<td class="nombre">2</td>
+<td class="nombre">6,30 €</td>
+</tr>
+</tbody>
+<tfoot><tr>
+<th scope="row" colspan="4">Total</th>
+<td class="nombre total">11,03 €</td>
+</tr></tfoot>
+</table></div>
+<p class="note">Tarif = valeur de la lettre-clé × coefficient. AMI 3,15 € · AIS 2,65 € · DI 10,00 €</p></section></main>
+</body>
+</html>

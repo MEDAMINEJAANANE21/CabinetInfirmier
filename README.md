@@ -1,13 +1,18 @@
 # Cabinet Infirmier
 
-Modélisation XML d'un cabinet de soins infirmiers à domicile : les données (cabinet, infirmiers, patients, visites, nomenclature des actes) sont décrites en XML, contraintes par des schémas XSD, puis transformées en XSLT en deux pages HTML :
+Modélisation XML d'un cabinet de soins infirmiers à domicile : les données (cabinet, infirmiers, patients, visites, nomenclature des actes) sont décrites en XML, contraintes par des schémas XSD, puis transformées en XSLT en un petit site HTML :
 
-- la **tournée de l'infirmier** : les patients qu'il doit voir et les soins à effectuer, avec le code NGAP de chaque acte ;
-- le **dossier d'un patient** : ses informations et l'historique de ses visites.
+- le **tableau de bord** : chiffres du cabinet, montant par patient, actes les plus réalisés, liste des visites ;
+- la **tournée de l'infirmier** : les patients qu'il doit voir et les soins à effectuer, avec le code NGAP et le tarif de chaque visite ;
+- le **dossier de chaque patient** : ses informations et l'historique de ses visites ;
+- la **facture de chaque patient** : les actes, leur cotation (lettre-clé × coefficient) et le total ;
+- la **nomenclature** : les 25 actes de `acte.xml` par type, avec leur tarif et le nombre de fois où ils ont été réalisés.
+
+Toutes les pages sont produites par XSLT 1.0 à partir de `cabinet.xml` et `acte.xml`, sans aucune donnée ajoutée.
 
 Projet réalisé en L3 MIAGE à l'Université Grenoble Alpes.
 
-![Tournée de l'infirmier](docs/captures/tournee.png)
+![Tableau de bord](docs/captures/tableau-de-bord.png)
 
 ---
 
@@ -20,7 +25,7 @@ Projet réalisé en L3 MIAGE à l'Université Grenoble Alpes.
 5. [Schémas XSD et contraintes](#schémas-xsd-et-contraintes)
 6. [Transformations XSLT](#transformations-xslt)
 7. [Interface](#interface)
-8. [Facturation (JavaScript)](#facturation-javascript)
+8. [Facturation](#facturation)
 9. [Projet .NET](#projet-net)
 10. [Limites connues et pistes](#limites-connues-et-pistes)
 11. [Auteur](#auteur)
@@ -33,9 +38,13 @@ Projet réalisé en L3 MIAGE à l'Université Grenoble Alpes.
 | --- | --- |
 | ![Tournée](docs/captures/tournee.png) | ![Dossier patient](docs/captures/dossier-patient.png) |
 
+| Facture | Nomenclature |
+| --- | --- |
+| ![Facture](docs/captures/facture.png) | ![Nomenclature](docs/captures/nomenclature.png) |
+
 Les pages suivent le thème du système (clair ou sombre) :
 
-![Tournée en mode sombre](docs/captures/tournee-sombre.png)
+![Tableau de bord en mode sombre](docs/captures/tableau-de-bord-sombre.png)
 
 ---
 
@@ -54,16 +63,27 @@ CabinetInfirmier/
 │   │   ├── actes.xsd          Schéma de acte.xml
 │   │   └── patient.xsd        Schéma des dossiers patient
 │   ├── xslt/
-│   │   ├── cabinet.xsl        cabinet.xml → page HTML de la tournée
+│   │   ├── commun.xsl         Modèles partagés : navigation, dates, tarifs (xsl:include)
+│   │   ├── accueil.xsl        cabinet.xml → tableau de bord
+│   │   ├── cabinet.xsl        cabinet.xml → tournée de l'infirmier
+│   │   ├── facture.xsl        cabinet.xml → facture d'un patient
+│   │   ├── nomenclature.xsl   acte.xml → nomenclature des actes
 │   │   ├── patientxml.xsl     cabinet.xml → dossier XML d'un patient
 │   │   └── patienthtml.xsl    dossier XML d'un patient → page HTML
 │   ├── html/
-│   │   ├── infirmier.html     Tournée, résultat de cabinet.xsl
-│   │   ├── patient-<NIR>.html Un dossier par patient, lié depuis la tournée
-│   │   └── patienthtml.html   Dossier de référence (Hiba), résultat de patientxml.xml
+│   │   ├── index.html           Tableau de bord, page d'accueil
+│   │   ├── infirmier.html       Tournée
+│   │   ├── nomenclature.html    Nomenclature des actes
+│   │   ├── patient-<NIR>.html   Un dossier par patient
+│   │   ├── facture-<NIR>.html   Une facture par patient
+│   │   └── patienthtml.html     Dossier de référence (Hiba), résultat de patientxml.xml
 │   ├── css/
-│   │   ├── infirmier.css      Styles de la tournée
-│   │   └── patient.css        Styles du dossier patient
+│   │   ├── commun.css         Couleurs, typographie, barre de navigation, cartes, tableaux
+│   │   ├── accueil.css        Tableau de bord
+│   │   ├── infirmier.css      Tournée
+│   │   ├── patient.css        Dossier patient
+│   │   ├── facture.css        Facture
+│   │   └── nomenclature.css   Nomenclature
 │   ├── js/
 │   │   └── facture.js         Génération d'une facture (squelette à compléter)
 │   └── uml/
@@ -95,14 +115,17 @@ Puis ouvrir [http://localhost:8085](http://localhost:8085).
 
 | Adresse | Contenu |
 | --- | --- |
-| `http://localhost:8085/` | Tournée de l'infirmier (redirige vers `/html/infirmier.html`) |
-| `http://localhost:8085/html/patient-<NIR>.html` | Dossier d'un patient, ouvert en cliquant sur son nom dans la tournée |
+| `http://localhost:8085/` | Tableau de bord (redirige vers `/html/index.html`) |
+| `http://localhost:8085/tournee` | Tournée de l'infirmier (redirige vers `/html/infirmier.html`) |
+| `http://localhost:8085/html/nomenclature.html` | Nomenclature des actes |
+| `http://localhost:8085/html/patient-<NIR>.html` | Dossier d'un patient |
+| `http://localhost:8085/html/facture-<NIR>.html` | Facture d'un patient |
 | `http://localhost:8085/patient` | Dossier de référence de `patientxml.xml` (redirige vers `/html/patienthtml.html`) |
 | `http://localhost:8085/xml/`, `/xsd/`, `/xslt/` | Fichiers sources, consultables dans le navigateur |
 
-Les pages sont reliées entre elles : chaque nom de patient de la tournée ouvre son dossier, et chaque dossier a un lien « Retour à la tournée ». Le lien « Données XML » affiche `cabinet.xml`.
+Les pages sont reliées : une barre de navigation en haut (Tableau de bord, Tournée, Nomenclature, Données XML), et dans la tournée et le tableau de bord, les noms de patients et les montants mènent au dossier et à la facture. Chaque dossier a un lien vers sa facture, et chaque facture un lien vers son dossier.
 
-À la construction, l'image lance [docker/generer.sh](docker/generer.sh) : il valide chaque fichier XML contre son schéma, génère la tournée, puis un dossier par patient (chaque dossier intermédiaire est lui aussi validé contre `patient.xsd`). Si un fichier devient invalide, la construction échoue. Les pages sont ensuite servies par nginx.
+À la construction, l'image lance [docker/generer.sh](docker/generer.sh) : il valide chaque fichier XML contre son schéma, génère le tableau de bord, la nomenclature et la tournée, puis un dossier et une facture par patient (chaque dossier intermédiaire est lui aussi validé contre `patient.xsd`). Si un fichier devient invalide, la construction échoue. Les pages sont ensuite servies par nginx.
 
 Options :
 
@@ -130,14 +153,13 @@ docker run --rm -p 8085:80 cabinet-infirmier
 
 Les pages déjà générées s'ouvrent directement dans un navigateur :
 
-- [data/html/infirmier.html](data/html/infirmier.html), la tournée, d'où l'on ouvre chaque dossier
-- [data/html/patienthtml.html](data/html/patienthtml.html), le dossier de référence
+- [data/html/index.html](data/html/index.html), le tableau de bord, d'où l'on navigue vers toutes les autres pages
 
 Les feuilles de style sont référencées en chemin relatif (`../css/…`), il n'y a donc pas besoin de serveur. Les polices IBM Plex sont chargées depuis Google Fonts ; hors ligne, la police système prend le relais.
 
 ### Régénérer les pages sans Docker
 
-Les commandes se lancent depuis la racine du dépôt. Chaque transformation charge `acte.xml` via `document('../xml/acte.xml', /)`, chemin résolu par rapport au fichier XML source : il faut donc laisser les fichiers dans `data/xml/`.
+Les commandes se lancent depuis la racine du dépôt. Les feuilles HTML chargent `acte.xml` et `cabinet.xml` depuis `commun.xsl` avec `document('../xml/…')`, chemin résolu par rapport à la feuille XSLT : il faut donc garder la structure `data/xml/` et `data/xslt/`.
 
 **Avec le script** (Linux, macOS, WSL, avec xsltproc et xmllint installés) : il fait la validation et toutes les générations d'un coup.
 
@@ -149,9 +171,17 @@ INFIRMIER_ID=001 PATIENT_PRENOM=Elvira sh docker/generer.sh   # avec d'autres pa
 **Avec xsltproc, étape par étape** :
 
 ```bash
+# Tableau de bord et nomenclature
+xsltproc -o data/html/index.html        data/xslt/accueil.xsl      data/xml/cabinet.xml
+xsltproc -o data/html/nomenclature.html data/xslt/nomenclature.xsl data/xml/acte.xml
+
 # Tournée de l'infirmier 001
 xsltproc --stringparam destinedId 001 \
   -o data/html/infirmier.html data/xslt/cabinet.xsl data/xml/cabinet.xml
+
+# Facture d'un patient
+xsltproc --stringparam destinedNir 175037306569237 \
+  -o data/html/facture-175037306569237.html data/xslt/facture.xsl data/xml/cabinet.xml
 
 # Dossier d'un patient choisi par son NIR : XML intermédiaire, puis page HTML
 xsltproc --stringparam destinedNir 175037306569237 \
@@ -185,11 +215,13 @@ function Invoke-Xslt($xsl, $xml, $out) {
     $writer.Close(); $reader.Close()
 }
 
-Invoke-Xslt data\xslt\cabinet.xsl     data\xml\cabinet.xml     data\html\infirmier.html
-Invoke-Xslt data\xslt\patienthtml.xsl data\xml\patientxml.xml  data\html\patienthtml.html
+Invoke-Xslt data\xslt\accueil.xsl      data\xml\cabinet.xml     data\html\index.html
+Invoke-Xslt data\xslt\nomenclature.xsl data\xml\acte.xml        data\html\nomenclature.html
+Invoke-Xslt data\xslt\cabinet.xsl      data\xml\cabinet.xml     data\html\infirmier.html
+Invoke-Xslt data\xslt\patienthtml.xsl  data\xml\patientxml.xml  data\html\patienthtml.html
 ```
 
-Cette fonction ne passe pas de paramètres XSLT : pour générer les dossiers `patient-<NIR>.html`, utiliser Docker ou le script.
+Cette fonction ne passe pas de paramètres XSLT : pour générer les dossiers `patient-<NIR>.html` et les factures `facture-<NIR>.html`, utiliser Docker ou le script.
 
 Les IDE JetBrains (Rider, IntelliJ) et Oxygen XML permettent aussi de lancer une transformation depuis le fichier XSL.
 
@@ -414,13 +446,50 @@ Toutes les feuilles sont en XSLT 1.0, ce qui les rend utilisables avec n'importe
 flowchart LR
     C[cabinet.xml]
     A[acte.xml]
+    C --> XA[[accueil.xsl]] --> HA[index.html]
     C --> X1[[cabinet.xsl]] --> H1[infirmier.html]
+    C --> XF[["facture.xsl (un passage par NIR)"]] --> HF["facture-NIR.html"]
+    A --> XN[[nomenclature.xsl]] --> HN[nomenclature.html]
     C --> X2[["patientxml.xsl (un passage par NIR)"]] --> P["dossier XML du patient"] --> X3[[patienthtml.xsl]] --> H2["patient-NIR.html"]
-    A -. "document()" .-> X1
-    A -. "document()" .-> X2
-    H1 -- "lien sur le nom" --> H2
-    H2 -- "Retour à la tournée" --> H1
 ```
+
+Les feuilles qui produisent du HTML incluent toutes [commun.xsl](data/xslt/commun.xsl) (`<xsl:include href="commun.xsl"/>`), qui charge `acte.xml` et `cabinet.xml` avec `document()` et fournit les modèles partagés.
+
+### `commun.xsl` : modèles partagés
+
+| Modèle ou variable | Rôle |
+| --- | --- |
+| `$actes`, `$cabinet` | `document('../xml/acte.xml')` et `document('../xml/cabinet.xml')`, disponibles dans toutes les pages |
+| `$centimesAMI`, `$centimesAIS`, `$centimesDI` | valeur des lettres-clés en centimes : 315, 265, 1000 (les constantes de `facture.js`) |
+| `entete-html` | `<head>` commun : titre, polices, `commun.css` et la feuille propre à la page |
+| `barre` | barre de navigation, avec la page courante marquée par `aria-current="page"` |
+| `date` | `AAAA-MM-JJ` vers `JJ/MM/AAAA`, dans un élément `<time datetime="…">` |
+| `centimes-acte` | tarif d'un acte : `round(coef × valeur de la clé)` |
+| `centimes-total` | somme récursive des tarifs d'une liste de `<acte id="…"/>` |
+| `euros` | centimes vers `11,03 €` avec `format-number` et un `xsl:decimal-format` français |
+| `code-acte` | étiquette du code NGAP : `101 · AMI 1,5` |
+
+Les montants sont calculés en **centimes entiers** : additionner directement des décimaux comme 4,725 donne des erreurs d'arrondi en virgule flottante. Chaque acte est arrondi au centime, puis les tarifs sont additionnés.
+
+Le tarif d'un acte s'écrit en une seule expression XPath, où une comparaison vaut 1 si elle est vraie et 0 sinon :
+
+```xml
+<xsl:value-of select="round($ref/@coef * (($ref/@clé = 'AMI') * $centimesAMI
+                                         + ($ref/@clé = 'AIS') * $centimesAIS
+                                         + ($ref/@clé = 'DI') * $centimesDI))"/>
+```
+
+XSLT 1.0 ne sait pas additionner des valeurs calculées (`sum()` ne prend que des nœuds), d'où le modèle récursif `centimes-total` : il traite le premier acte de la liste, puis se rappelle sur `$refs[position() > 1]` en transmettant le cumul.
+
+### `accueil.xsl` : le tableau de bord
+
+Produit `index.html` à partir de `cabinet.xml` :
+
+- **quatre chiffres** : patients, visites, actes réalisés, montant facturable ;
+- **montant par patient**, en barres classées du plus élevé au plus faible. Les montants sont d'abord calculés dans une variable, convertie avec `exsl:node-set()` pour pouvoir être triée avec `xsl:sort` ;
+- **actes les plus réalisés**, regroupés par identifiant avec la méthode de Muench : `xsl:key` sur `med:visite/med:acte`, puis `generate-id() = generate-id(key('acte-par-id', @id)[1])` ;
+- **équipe** : chaque infirmier et son nombre de patients ;
+- **visites**, triées de la plus récente à la plus ancienne, avec liens vers le dossier et la facture.
 
 ### `cabinet.xsl` : la tournée de l'infirmier
 
@@ -430,13 +499,22 @@ flowchart LR
 
 Fonctionnement :
 
-1. La nomenclature est chargée une fois dans une variable globale :
-   `<xsl:variable name="actes" select="document('../xml/acte.xml', /)/act:ngap"/>`
-2. Les patients retenus sont ceux qui ont au moins une visite de cet infirmier :
-   `med:patient[med:visite/@intervenant = $destinedId]`. Leur nombre s'affiche en en-tête.
-3. Pour chaque patient : nom, NIR, sexe, date de naissance, adresse sur une ligne (numéro et étage seulement s'ils existent), puis le tableau des visites de cet infirmier. Le nom est un lien vers le dossier du patient, construit à partir de son NIR avec un modèle de valeur d'attribut : `<a href="patient-{@numéro}.html">`.
-4. Chaque `<acte id="…"/>` est cherché dans la nomenclature (`$actes/act:actes/act:acte[@id = $idActeVisite]`) pour afficher son code (`101 · AMI 1,5`) et son intitulé.
-5. Un modèle nommé `date` convertit `AAAA-MM-JJ` en `JJ/MM/AAAA` et produit un élément `<time datetime="…">`.
+1. Les patients retenus sont ceux qui ont au moins une visite de cet infirmier :
+   `med:patient[med:visite/@intervenant = $destinedId]`. L'en-tête affiche leur nombre, le nombre d'actes et le montant total.
+2. Pour chaque patient : nom, NIR, sexe, date de naissance, adresse sur une ligne (numéro et étage seulement s'ils existent), puis le tableau des visites de cet infirmier avec leur tarif. Le nom est un lien vers le dossier, construit à partir du NIR avec un modèle de valeur d'attribut : `<a href="patient-{@numéro}.html">`. Le bas de chaque fiche mène au dossier et à la facture.
+3. Chaque `<acte id="…"/>` est cherché dans la nomenclature (`$actes/act:actes/act:acte[@id = $idActeVisite]`) pour afficher son code (`101 · AMI 1,5`) et son intitulé.
+
+### `facture.xsl` : la facture d'un patient
+
+| Paramètre | Valeur par défaut | Rôle |
+| --- | --- | --- |
+| `destinedNir` | `206049935000375` | NIR du patient à facturer |
+
+La facture reprend les colonnes prévues dans `facture.js` : pour chaque acte, la date, l'intitulé et le type, la lettre-clé, le coefficient et le tarif, puis le total. En haut, le cabinet (nom, adresse, infirmier intervenant) et le patient (nom, adresse, NIR). Un bouton « Imprimer » appelle `window.print()`, et la feuille d'impression masque la navigation.
+
+### `nomenclature.xsl` : la nomenclature des actes
+
+Produit `nomenclature.html` à partir de `acte.xml` : la valeur des trois lettres-clés, puis une section par type d'acte avec, pour chaque acte, le code, l'intitulé, la clé, le coefficient, le tarif calculé et le nombre de fois où il a été réalisé dans `cabinet.xml`. Les actes réalisés au moins une fois ressortent en couleur.
 
 ### `patientxml.xsl` : extraire le dossier d'un patient
 
@@ -451,30 +529,34 @@ La feuille sort du XML dans l'espace de noms `pat` (`exclude-result-prefixes="me
 
 ### `patienthtml.xsl` : afficher le dossier
 
-Transforme un dossier `pat:patient` en page HTML : navigation (retour à la tournée), en-tête avec le nom et le NIR, bloc d'informations, puis tableau des visites (date, intervenant, actes) avec leur nombre.
+Transforme un dossier `pat:patient` en page HTML : en-tête avec le nom, le NIR et des liens vers la tournée et la facture, bloc d'informations, puis tableau des visites (date, intervenant, actes) avec leur nombre.
+
+Le dossier ne contient que l'intitulé des actes, pas leur identifiant. Pour afficher quand même le code NGAP, la feuille cherche dans `acte.xml` l'acte qui a le même intitulé (`normalize-space(.) = $intitule`). S'il n'est pas trouvé, comme dans `patient.xml` écrit à la main avec d'autres apostrophes, seul l'intitulé s'affiche.
 
 ---
 
 ## Interface
 
-Les deux pages partagent une même direction visuelle : une feuille de tournée sur papier, sobre et lisible pendant une journée de soins.
+Toutes les pages partagent une même direction visuelle : une feuille de tournée sur papier, sobre et lisible pendant une journée de soins.
 
-- **Couleurs** : fond papier `#f7f4ee`, cartes `#fdfbf7`, filets à 8 % d'opacité, trois niveaux de texte. Un seul accent, vert sarcelle `#0f766e`, réservé au nombre de patients et aux codes NGAP.
+- **Couleurs** : fond papier `#f7f4ee`, cartes `#fdfbf7`, filets à 8 % d'opacité, trois niveaux de texte. Un seul accent, vert sarcelle `#0f766e`, réservé aux codes NGAP, à la page courante et au chiffre qui compte (le patient au montant le plus élevé, les actes réalisés).
 - **Mode sombre** : automatique via `prefers-color-scheme`, avec les mêmes rôles de couleur (accent `#5fc4b6`).
 - **Typographie** : IBM Plex Sans pour le texte, IBM Plex Mono pour les données à lire d'un coup d'œil (NIR, dates, codes d'actes), chiffres tabulaires.
 - **Espacements** : grille de 4 px (8, 12, 16, 24, 32…).
 - **Codes NGAP** : chaque acte est précédé de son code (`106 · AMI 2`), pour retrouver la cotation sans ouvrir la nomenclature.
-- **Navigation** : une barre de liens en haut de chaque page (Tournée, Données XML). Dans la tournée, les noms de patients sont soulignés discrètement et ouvrent leur dossier.
-- **Petits écrans** : sous 600 px, les tableaux passent en lecture verticale (date, puis actes).
-- **Impression** : fond blanc et cartes non coupées entre deux pages, pour imprimer la tournée.
+- **Navigation** : une barre en haut de chaque page, avec le nom du cabinet et les liens Tableau de bord, Tournée, Nomenclature et Données XML. Les noms de patients soulignés ouvrent leur dossier.
+- **Petits écrans** : les grilles passent sur une colonne, la tournée et les dossiers passent en lecture verticale, les tableaux larges défilent horizontalement.
+- **Impression** : fond blanc, navigation et boutons masqués, cartes non coupées entre deux pages, pour imprimer une tournée ou une facture.
 
-Les variables de couleur sont déclarées en tête de [data/css/infirmier.css](data/css/infirmier.css) et [data/css/patient.css](data/css/patient.css).
+Les couleurs, la typographie et les composants communs sont dans [data/css/commun.css](data/css/commun.css). Chaque page ajoute sa propre feuille, courte, pour ses éléments particuliers.
 
 ---
 
-## Facturation (JavaScript)
+## Facturation
 
-[data/js/facture.js](data/js/facture.js) prépare la génération d'une facture HTML pour un patient :
+Les factures sont générées en XSLT par [facture.xsl](data/xslt/facture.xsl), une par patient (voir [plus haut](#facturexsl--la-facture-dun-patient)). Elles appliquent les règles prévues dans le squelette JavaScript d'origine, avec les mêmes valeurs de lettres-clés.
+
+Le squelette [data/js/facture.js](data/js/facture.js) est conservé tel quel. Il devait produire la même facture côté navigateur :
 
 - `afficherFacture(prenom, nom, actes)` cherche le patient dans le XML, affiche son adresse et son NIR, puis un tableau des actes (type, clé, intitulé, coefficient, tarif) et le total ;
 - `acteTable(acteId)` doit retrouver un acte dans la nomenclature et calculer son tarif ;
@@ -482,6 +564,16 @@ Les variables de couleur sont déclarées en tête de [data/css/infirmier.css](d
 - `loadXMLDoc(docName)` charge un document XML par `XMLHttpRequest` synchrone.
 
 **État : squelette à compléter.** Les parties marquées `A compléter` ne sont pas écrites, le tableau affiche `???`, et le fichier n'est relié à aucune page. Voir [Limites connues](#limites-connues-et-pistes).
+
+Montants obtenus avec les données du projet :
+
+| Patient | Actes | Total |
+| --- | --- | --- |
+| Hiba Bounoune | 101 (AMI 1,5) + 106 (AMI 2) | 4,73 € + 6,30 € = 11,03 € |
+| Oscare Pien | 101 (AMI 1,5) + 105 (AMI 1,5) | 4,73 € + 4,73 € = 9,46 € |
+| Elvira Orouge | 104 (AMI 2) | 6,30 € |
+| Xavier Kapoëtla | 106 (AMI 2) | 6,30 € |
+| **Cabinet** | 6 actes | **33,09 €** |
 
 ---
 
@@ -507,6 +599,8 @@ dotnet run
 
 **Facturation**
 
+- Les tarifs AMI, AIS et DI sont ceux du squelette du TP, pas les valeurs actuelles de l'Assurance maladie. Ils se changent en un seul endroit, dans `commun.xsl`.
+- Le tableau de bord utilise `exsl:node-set()`, une extension EXSLT reconnue par xsltproc, Saxon et .NET mais pas par tous les processeurs XSLT 1.0 (ni par les navigateurs).
 - `facture.js` charge `data/cabinetInfirmier.xml` et `data/actes.xml`, alors que les fichiers s'appellent `data/xml/cabinet.xml` et `data/xml/acte.xml`.
 - La recherche par `getElementsByTagName("patient")` ignore les espaces de noms ; `getElementsByTagNameNS` serait plus sûr.
 - Les fonctions `acteTable` et `adresseToText` restent à écrire, et la feuille `css/mystyle.css` référencée n'existe pas.

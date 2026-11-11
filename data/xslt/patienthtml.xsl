@@ -1,27 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!-- Dossier XML d'un patient (espace de noms pat) → page HTML -->
 <xsl:stylesheet version="1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:pat="http://www.univ-grenoble-alpes.fr/l3miage/patient"
-                exclude-result-prefixes="pat">
+                xmlns:act="http://www.univ-grenoble-alpes.fr/l3miage/actes"
+                exclude-result-prefixes="pat act">
+
+    <xsl:include href="commun.xsl"/>
 
     <xsl:output method="html" encoding="UTF-8" indent="yes" doctype-system="about:legacy-compat"/>
 
     <xsl:template match="/">
         <html lang="fr">
-            <head>
-                <meta name="viewport" content="width=device-width, initial-scale=1"/>
-                <title>Dossier patient</title>
-                <link rel="preconnect" href="https://fonts.googleapis.com"/>
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
-                <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500&amp;display=swap"/>
-                <link rel="stylesheet" href="../css/patient.css"/>
-            </head>
+            <xsl:call-template name="entete-html">
+                <xsl:with-param name="titre">Dossier patient</xsl:with-param>
+                <xsl:with-param name="css">patient.css</xsl:with-param>
+            </xsl:call-template>
             <body>
+                <xsl:call-template name="barre"/>
                 <main class="page">
-                    <nav class="nav" aria-label="Navigation">
-                        <a href="infirmier.html">Retour à la tournée</a>
-                        <a href="../xml/cabinet.xml">Données XML</a>
-                    </nav>
                     <xsl:apply-templates select="pat:patient"/>
                 </main>
             </body>
@@ -29,17 +26,23 @@
     </xsl:template>
 
     <xsl:template match="pat:patient">
-        <header class="entete">
-            <p class="surtitre">Dossier patient</p>
-            <h1>
-                <xsl:value-of select="normalize-space(pat:prénom)"/>
-                <xsl:text> </xsl:text>
-                <xsl:value-of select="normalize-space(pat:nom)"/>
-            </h1>
-            <p class="nir">NIR <xsl:value-of select="pat:numéroSS"/></p>
+        <header class="entete entete-actions">
+            <div>
+                <p class="surtitre">Dossier patient</p>
+                <h1>
+                    <xsl:value-of select="normalize-space(pat:prénom)"/>
+                    <xsl:text> </xsl:text>
+                    <xsl:value-of select="normalize-space(pat:nom)"/>
+                </h1>
+                <p class="nir">NIR <xsl:value-of select="pat:numéroSS"/></p>
+            </div>
+            <div class="actions">
+                <a class="bouton bouton-secondaire" href="infirmier.html">Tournée</a>
+                <a class="bouton" href="facture-{pat:numéroSS}.html">Facture</a>
+            </div>
         </header>
 
-        <section class="bloc">
+        <section class="carte">
             <h2>Informations</h2>
             <dl class="fiche">
                 <dt>Nom</dt>
@@ -59,10 +62,10 @@
             </dl>
         </section>
 
-        <section class="bloc">
-            <div class="bloc-titre">
+        <section class="carte">
+            <div class="carte-titre">
                 <h2>Visites</h2>
-                <span class="compte">
+                <span class="meta">
                     <xsl:value-of select="count(pat:visite)"/>
                     <xsl:choose>
                         <xsl:when test="count(pat:visite) &gt; 1"> visites</xsl:when>
@@ -70,18 +73,20 @@
                     </xsl:choose>
                 </span>
             </div>
-            <table class="visites">
-                <thead>
-                    <tr>
-                        <th scope="col">Date</th>
-                        <th scope="col">Intervenant</th>
-                        <th scope="col">Actes</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <xsl:apply-templates select="pat:visite"/>
-                </tbody>
-            </table>
+            <div class="defilement">
+                <table class="visites">
+                    <thead>
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Intervenant</th>
+                            <th scope="col">Actes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <xsl:apply-templates select="pat:visite"/>
+                    </tbody>
+                </table>
+            </div>
         </section>
     </xsl:template>
 
@@ -110,16 +115,18 @@
         </tr>
     </xsl:template>
 
+    <!-- Le dossier ne garde que l'intitulé : on retrouve le code NGAP en le comparant à acte.xml -->
     <xsl:template match="pat:acte">
-        <li><xsl:value-of select="normalize-space(.)"/></li>
-    </xsl:template>
-
-    <!-- AAAA-MM-JJ vers JJ/MM/AAAA -->
-    <xsl:template name="date">
-        <xsl:param name="iso"/>
-        <time datetime="{$iso}">
-            <xsl:value-of select="concat(substring($iso, 9, 2), '/', substring($iso, 6, 2), '/', substring($iso, 1, 4))"/>
-        </time>
+        <xsl:variable name="intitule" select="normalize-space(.)"/>
+        <xsl:variable name="ref" select="$actes/act:actes/act:acte[normalize-space(.) = $intitule]"/>
+        <li>
+            <xsl:if test="$ref">
+                <xsl:call-template name="code-acte">
+                    <xsl:with-param name="ref" select="$ref[1]"/>
+                </xsl:call-template>
+            </xsl:if>
+            <span class="intitule"><xsl:value-of select="$intitule"/></span>
+        </li>
     </xsl:template>
 
 </xsl:stylesheet>

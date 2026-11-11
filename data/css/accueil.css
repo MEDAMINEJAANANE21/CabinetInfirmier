@@ -1,0 +1,208 @@
+/* Tableau de bord (data/xslt/accueil.xsl) ; la base est dans commun.css */
+
+/* Chiffres clés */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.stat {
+    padding: 20px;
+    background: var(--carte);
+    border: 1px solid var(--trait);
+    border-radius: 16px;
+    box-shadow: var(--ombre);
+}
+
+.stat-libelle {
+    font-size: 13px;
+    line-height: 20px;
+    color: var(--texte-2);
+}
+
+.stat-valeur {
+    margin-top: 8px;
+    font-size: 28px;
+    line-height: 1;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+/* Grille : graphique principal et colonne */
+
+.grille {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.grille .carte + .carte,
+.colonne .carte + .carte {
+    margin-top: 0;
+}
+
+.colonne {
+    display: grid;
+    gap: 16px;
+    align-content: start;
+}
+
+/* Montant par patient : barres horizontales classées */
+
+.barres {
+    display: grid;
+    gap: 20px;
+    list-style: none;
+}
+
+.barre-ligne {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.barre-valeur {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--texte-2);
+    font-variant-numeric: tabular-nums;
+}
+
+.barre-piste {
+    height: 8px;
+    background: var(--releve);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.barre-remplie {
+    height: 100%;
+    background: var(--texte-3);
+    border-radius: 4px;
+}
+
+.premier .barre-remplie {
+    background: var(--accent);
+}
+
+.premier .barre-valeur {
+    color: var(--texte);
+}
+
+/* Actes les plus réalisés */
+
+.classement {
+    display: grid;
+    gap: 12px;
+    list-style: none;
+}
+
+.classement li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 12px;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+.classement .code {
+    min-width: 0;
+}
+
+.classement-texte {
+    overflow: hidden;
+    color: var(--texte-2);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Équipe */
+
+.equipe {
+    list-style: none;
+}
+
+.equipe li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.equipe li > span:last-child {
+    display: grid;
+    gap: 2px;
+}
+
+.initiales {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 36px;
+    height: 36px;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--accent);
+    background: var(--accent-fond);
+    border: 1px solid var(--accent-trait);
+    border-radius: 50%;
+}
+
+/* Tableau des visites */
+
+.visites th:first-child,
+.visites td:first-child {
+    width: 112px;
+}
+
+.visites td a {
+    text-decoration: underline;
+    text-decoration-color: var(--trait-fort);
+    text-underline-offset: 4px;
+}
+
+.visites td a:hover {
+    text-decoration-color: var(--accent);
+}
+
+.codes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.codes .code {
+    min-width: 0;
+}
+
+@media (max-width: 860px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grille {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .stat-valeur {
+        font-size: 24px;
+    }
+
+    .visites {
+        min-width: 560px;
+    }
+}

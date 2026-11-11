@@ -1,0 +1,73 @@
+/* Nomenclature des actes (data/xslt/nomenclature.xsl) ; la base est dans commun.css */
+
+.cles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.cle {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: baseline;
+    gap: 8px 12px;
+    padding: 20px;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--texte-2);
+    background: var(--carte);
+    border: 1px solid var(--trait);
+    border-radius: 16px;
+    box-shadow: var(--ombre);
+}
+
+.cle .code {
+    min-width: 0;
+    text-align: center;
+}
+
+.cle-valeur {
+    grid-column: 1 / -1;
+    font-size: 24px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: var(--texte);
+    font-variant-numeric: tabular-nums;
+}
+
+.nomenclature th:first-child,
+.nomenclature td:first-child {
+    width: 64px;
+}
+
+.nomenclature td.mono {
+    font-size: 13px;
+    color: var(--texte-3);
+}
+
+.nomenclature td.nombre {
+    font-family: var(--mono);
+    font-size: 13px;
+}
+
+/* Les actes réalisés dans le cabinet ressortent */
+.nomenclature tr.realise td.mono,
+.nomenclature tr.realise td:last-child {
+    color: var(--accent);
+    font-weight: 500;
+}
+
+.vide {
+    color: var(--texte-3);
+}
+
+@media (max-width: 720px) {
+    .cles {
+        grid-template-columns: 1fr;
+    }
+
+    .nomenclature {
+        min-width: 600px;
+    }
+}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tableau de bord</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="../css/commun.css">
+<link rel="stylesheet" href="../css/accueil.css">
+</head>
+<body>
+<header class="barre"><div class="barre-contenu">
+<a class="marque" href="index.html">jaananeCabinet</a><nav class="nav" aria-label="Navigation principale"><a href="index.html" aria-current="page">Tableau de bord</a><a href="infirmier.html">Tournée</a><a href="nomenclature.html">Nomenclature</a><a href="../xml/cabinet.xml">Données XML</a></nav>
+</div></header><main class="page page-large"><header class="entete"><p class="surtitre">55 allee, 38400 grenoble</p>
+<h1>Tableau de bord</h1></header><section class="stats" aria-label="Chiffres du cabinet"><div class="stat">
+<p class="stat-libelle">Patients</p>
+<p class="stat-valeur">4</p>
+</div>
+<div class="stat">
+<p class="stat-libelle">Visites</p>
+<p class="stat-valeur">4</p>
+</div>
+<div class="stat">
+<p class="stat-libelle">Actes réalisés</p>
+<p class="stat-valeur">6</p>
+</div>
+<div class="stat">
+<p class="stat-libelle">Montant facturable</p>
+<p class="stat-valeur">33,09 €</p>
+</div></section><div class="grille">
+<section class="carte carte-principale"><div class="carte-titre">
+<h2>Montant par patient</h2>
+<span class="meta">tarifs NGAP</span>
+</div>
+<ol class="barres">
+<li class="premier">
+<div class="barre-ligne">
+<a href="facture-206049935000375.html">Bounoune Hiba</a><span class="barre-valeur">11,03 €</span>
+</div>
+<div class="barre-piste"><div class="barre-remplie" style="width: 100%"></div></div>
+</li>
+<li>
+<div class="barre-ligne">
+<a href="facture-175037306569237.html">Pien Oscare</a><span class="barre-valeur">9,46 €</span>
+</div>
+<div class="barre-piste"><div class="barre-remplie" style="width: 86%"></div></div>
+</li>
+<li>
+<div class="barre-ligne">
+<a href="facture-282036912305243.html">Orouge Elvira</a><span class="barre-valeur">6,30 €</span>
+</div>
+<div class="barre-piste"><div class="barre-remplie" style="width: 57%"></div></div>
+</li>
+<li>
+<div class="barre-ligne">
+<a href="facture-111083306303521.html">Kapoëtla Xavier</a><span class="barre-valeur">6,30 €</span>
+</div>
+<div class="barre-piste"><div class="barre-remplie" style="width: 57%"></div></div>
+</li>
+</ol></section><aside class="colonne"><section class="carte"><h2>Actes les plus réalisés</h2>
+<ol class="classement">
+<li>
+<span class="code">101 · AMI 1,5</span><span class="classement-texte">Prélèvement par ponction veineuse directe</span><span class="meta">× 2</span>
+</li>
+<li>
+<span class="code">106 · AMI 2</span><span class="classement-texte">Inection intraveineuse directe chez un enfant de moins de 5 ans.</span><span class="meta">× 2</span>
+</li>
+<li>
+<span class="code">104 · AMI 2</span><span class="classement-texte">Inection intraveineuse directe isolée.</span><span class="meta">× 1</span>
+</li>
+<li>
+<span class="code">105 · AMI 1,5</span><span class="classement-texte">Injection intraveineuse directe en série.</span><span class="meta">× 1</span>
+</li>
+</ol></section><section class="carte"><h2>Équipe</h2>
+<ul class="equipe"><li>
+<span class="initiales" aria-hidden="true">AJ</span><span><a href="infirmier.html">amine jaanane</a><span class="meta">Infirmier 001 · 4 patients</span></span>
+</li></ul></section></aside>
+</div>
+<section class="carte"><div class="carte-titre">
+<h2>Visites</h2>
+<span class="meta">de la plus récente à la plus ancienne</span>
+</div>
+<div class="defilement"><table class="visites">
+<thead><tr>
+<th scope="col">Date</th>
+<th scope="col">Patient</th>
+<th scope="col">Intervenant</th>
+<th scope="col">Actes</th>
+<th scope="col" class="montant">Tarif</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="date"><time datetime="2025-10-14">14/10/2025</time></td>
+<td><a href="patient-206049935000375.html">Bounoune Hiba</a></td>
+<td>amine jaanane</td>
+<td><span class="codes"><span class="code">101 · AMI 1,5</span><span class="code">106 · AMI 2</span></span></td>
+<td class="montant"><a href="facture-206049935000375.html">11,03 €</a></td>
+</tr>
+<tr>
+<td class="date"><time datetime="2015-12-08">08/12/2015</time></td>
+<td><a href="patient-282036912305243.html">Orouge Elvira</a></td>
+<td>amine jaanane</td>
+<td><span class="codes"><span class="code">104 · AMI 2</span></span></td>
+<td class="montant"><a href="facture-282036912305243.html">6,30 €</a></td>
+</tr>
+<tr>
+<td class="date"><time datetime="2015-12-08">08/12/2015</time></td>
+<td><a href="patient-175037306569237.html">Pien Oscare</a></td>
+<td>amine jaanane</td>
+<td><span class="codes"><span class="code">101 · AMI 1,5</span><span class="code">105 · AMI 1,5</span></span></td>
+<td class="montant"><a href="facture-175037306569237.html">9,46 €</a></td>
+</tr>
+<tr>
+<td class="date"><time datetime="2015-12-08">08/12/2015</time></td>
+<td><a href="patient-111083306303521.html">Kapoëtla Xavier</a></td>
+<td>amine jaanane</td>
+<td><span class="codes"><span class="code">106 · AMI 2</span></span></td>
+<td class="montant"><a href="facture-111083306303521.html">6,30 €</a></td>
+</tr>
+</tbody>
+</table></div></section></main>
+</body>
+</html>
