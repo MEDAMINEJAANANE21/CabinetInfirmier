@@ -1,0 +1,11 @@
+services:
+  cabinet:
+    build:
+      context: .
+      args:
+        INFIRMIER_ID: "001"
+        PATIENT_PRENOM: "Hiba"
+    image: cabinet-infirmier
+    ports:
+      # Port local modifiable : PORT=9000 docker compose up
+      - "${PORT:-8085}:80"

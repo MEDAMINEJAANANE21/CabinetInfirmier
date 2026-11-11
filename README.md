@@ -68,7 +68,11 @@ CabinetInfirmier/
 │   └── uml/
 │       ├── cabinet.puml       Diagramme de classes du cabinet (PlantUML)
 │       └── patient.puml       Diagramme de classes du dossier patient (PlantUML)
+├── docker/
+│   └── nginx.conf             Configuration du serveur web de l'image
 ├── docs/captures/             Captures d'écran utilisées dans ce README
+├── Dockerfile                 Validation XSD, génération XSLT, puis service nginx
+├── docker-compose.yml         Lancement en une commande, port 8085 par défaut
 ├── CabinetInfirmier.csproj    Projet .NET 8 (conteneur pour l'IDE)
 ├── CabinetInfirmier.sln
 ├── Program.cs
@@ -79,7 +83,45 @@ CabinetInfirmier/
 
 ## Démarrage rapide
 
-### Voir les pages
+### Avec Docker
+
+```bash
+docker compose up --build
+```
+
+Puis ouvrir [http://localhost:8085](http://localhost:8085).
+
+| Adresse | Contenu |
+| --- | --- |
+| `http://localhost:8085/` | Tournée de l'infirmier (redirige vers `/html/infirmier.html`) |
+| `http://localhost:8085/patient` | Dossier patient (redirige vers `/html/patienthtml.html`) |
+| `http://localhost:8085/xml/`, `/xsd/`, `/xslt/` | Fichiers sources, consultables dans le navigateur |
+
+À la construction, l'image valide chaque fichier XML contre son schéma, puis lance les transformations XSLT avec `xsltproc`. Si un fichier XML devient invalide, la construction échoue. Les pages sont ensuite servies par nginx.
+
+Options :
+
+```bash
+# Changer le port local (8085 par défaut)
+PORT=9000 docker compose up --build             # bash
+$env:PORT=9000; docker compose up --build       # PowerShell
+
+# Afficher la tournée d'un autre infirmier, ou le dossier d'un autre patient
+docker compose build --build-arg INFIRMIER_ID=001 --build-arg PATIENT_PRENOM=Elvira
+docker compose up
+
+# Arrêter
+docker compose down
+```
+
+Sans Compose :
+
+```bash
+docker build -t cabinet-infirmier .
+docker run --rm -p 8085:80 cabinet-infirmier
+```
+
+### Voir les pages sans Docker
 
 Les pages déjà générées s'ouvrent directement dans un navigateur :
 
@@ -88,7 +130,7 @@ Les pages déjà générées s'ouvrent directement dans un navigateur :
 
 Les feuilles de style sont référencées en chemin relatif (`../css/…`), il n'y a donc pas besoin de serveur. Les polices IBM Plex sont chargées depuis Google Fonts ; hors ligne, la police système prend le relais.
 
-### Régénérer les pages
+### Régénérer les pages sans Docker
 
 Les commandes se lancent depuis la racine du dépôt. Chaque transformation charge `acte.xml` via `document('../xml/acte.xml', /)`, chemin résolu par rapport au fichier XML source : il faut donc laisser les fichiers dans `data/xml/`.
 
