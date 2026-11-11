@@ -10,7 +10,7 @@ Modélisation XML d'un cabinet de soins infirmiers à domicile : les données (c
 
 Toutes les pages sont produites par XSLT 1.0 à partir de `cabinet.xml` et `acte.xml`, sans aucune donnée ajoutée.
 
-Projet réalisé en L3 MIAGE à l'Université Grenoble Alpes.
+Projet académique réalisé à partir de zéro en L3 MIAGE à l'Université Grenoble Alpes : modèle de données, schémas XSD, transformations XSLT et mise en page. Seul `data/js/facture.js` est un squelette fourni pour le TP.
 
 ![Tableau de bord](docs/captures/tableau-de-bord.png)
 
