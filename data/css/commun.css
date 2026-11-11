@@ -1,42 +1,37 @@
 /* Styles partagés par toutes les pages du cabinet */
 
+/* Palette claire bleu et rose, toujours en thème clair */
 :root {
-    --fond: #f7f4ee;
-    --carte: #fdfbf7;
-    --releve: #efe9df;
-    --trait: rgba(31, 27, 22, 0.08);
-    --trait-fort: rgba(31, 27, 22, 0.14);
-    --texte: #1f1b16;
-    --texte-2: #5e554a;
-    --texte-3: #7b7266;
-    --accent: #0f766e;
-    --accent-fond: rgba(15, 118, 110, 0.07);
-    --accent-trait: rgba(15, 118, 110, 0.2);
-    --ombre: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --fond: #f6f8ff;
+    --carte: #ffffff;
+    --releve: #edf2ff;
+    --trait: rgba(30, 58, 138, 0.1);
+    --trait-fort: rgba(30, 58, 138, 0.18);
+    --texte: #14204a;
+    --texte-2: #46527d;
+    --texte-3: #67729a;
 
-    --police: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-    --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+    /* Bleu : couleur principale (navigation, boutons, codes d'actes) */
+    --accent: #2563eb;
+    --accent-fonce: #1d4ed8;
+    --accent-fond: #eaf1ff;
+    --accent-trait: rgba(37, 99, 235, 0.24);
+
+    /* Rose : mises en avant (montants, totaux, actes réalisés) */
+    --rose: #db2777;
+    --rose-vif: #ec4899;
+    --rose-fond: #fdebf4;
+    --rose-trait: rgba(219, 39, 119, 0.24);
+
+    --degrade: linear-gradient(90deg, #3b82f6, #ec4899);
+    --ombre: 0 1px 2px rgba(30, 58, 138, 0.05), 0 8px 24px rgba(30, 58, 138, 0.05);
+
+    --police: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "DM Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
     --courbe: cubic-bezier(0.22, 1, 0.36, 1);
     --largeur: 1040px;
 
-    color-scheme: light dark;
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --fond: #161513;
-        --carte: #1c1a18;
-        --releve: #262421;
-        --trait: rgba(239, 233, 222, 0.08);
-        --trait-fort: rgba(239, 233, 222, 0.14);
-        --texte: #efe9de;
-        --texte-2: #aaa398;
-        --texte-3: #8a847a;
-        --accent: #5fc4b6;
-        --accent-fond: rgba(95, 196, 182, 0.1);
-        --accent-trait: rgba(95, 196, 182, 0.24);
-        --ombre: none;
-    }
+    color-scheme: light;
 }
 
 *,
@@ -52,7 +47,12 @@ body {
     font-size: 15px;
     line-height: 22px;
     color: var(--texte);
-    background: var(--fond);
+    /* Lavis bleu puis rose en haut de page, qui se fond dans le fond */
+    background:
+        radial-gradient(ellipse 60% 360px at 12% 0, rgba(59, 130, 246, 0.16), transparent),
+        radial-gradient(ellipse 50% 320px at 88% 40px, rgba(236, 72, 153, 0.14), transparent),
+        var(--fond);
+    background-repeat: no-repeat;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -78,8 +78,20 @@ button:focus-visible {
 /* Barre du haut */
 
 .barre {
+    position: relative;
+    background: rgba(255, 255, 255, 0.8);
     border-bottom: 1px solid var(--trait);
-    background: var(--fond);
+}
+
+/* Fin filet bleu → rose sous la barre */
+.barre::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    height: 2px;
+    background: var(--degrade);
 }
 
 .barre-contenu {
@@ -93,10 +105,23 @@ button:focus-visible {
 }
 
 .marque {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     flex: none;
-    font-size: 16px;
+    font-size: 17px;
     line-height: 1;
     font-weight: 600;
+    color: var(--texte);
+}
+
+.marque:hover {
+    color: var(--accent);
+}
+
+.logo {
+    flex: none;
+    display: block;
 }
 
 .nav {
@@ -114,14 +139,14 @@ button:focus-visible {
 }
 
 .nav a:hover {
-    color: var(--texte);
-    background: var(--releve);
+    color: var(--accent-fonce);
+    background: var(--accent-fond);
 }
 
 .nav a[aria-current="page"] {
-    font-weight: 500;
-    color: var(--texte);
-    background: var(--releve);
+    font-weight: 600;
+    color: var(--accent-fonce);
+    background: var(--accent-fond);
 }
 
 /* Page */
@@ -152,10 +177,10 @@ button:focus-visible {
 }
 
 h1 {
-    font-size: 32px;
+    font-size: 36px;
     line-height: 1.15;
-    font-weight: 500;
-    letter-spacing: -0.01em;
+    font-weight: 600;
+    letter-spacing: -0.02em;
 }
 
 .resume {
@@ -165,8 +190,8 @@ h1 {
 }
 
 .resume strong {
-    font-weight: 500;
-    color: var(--accent);
+    font-weight: 600;
+    color: var(--rose);
 }
 
 .nir {
@@ -179,9 +204,9 @@ h1 {
 }
 
 h2 {
-    font-size: 16px;
+    font-size: 17px;
     line-height: 24px;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 h3 {
@@ -216,7 +241,7 @@ h3 {
     padding: 24px;
     background: var(--carte);
     border: 1px solid var(--trait);
-    border-radius: 16px;
+    border-radius: 20px;
     box-shadow: var(--ombre);
 }
 
@@ -262,22 +287,23 @@ h3 {
 .bouton {
     display: inline-flex;
     align-items: center;
-    height: 36px;
-    padding: 0 16px;
+    height: 40px;
+    padding: 0 18px;
     font: inherit;
     font-size: 14px;
-    font-weight: 500;
-    color: var(--fond);
-    background: var(--texte);
+    font-weight: 600;
+    color: #ffffff;
+    background: var(--accent);
     border: 1px solid transparent;
-    border-radius: 8px;
+    border-radius: 10px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
     cursor: pointer;
-    transition: opacity 150ms var(--courbe), transform 150ms var(--courbe);
+    transition: background-color 150ms var(--courbe), transform 150ms var(--courbe);
 }
 
 .bouton:hover {
-    color: var(--fond);
-    opacity: 0.88;
+    color: #ffffff;
+    background: var(--accent-fonce);
 }
 
 .bouton:active {
@@ -285,15 +311,15 @@ h3 {
 }
 
 .bouton-secondaire {
-    color: var(--texte);
+    color: var(--accent-fonce);
     background: var(--carte);
-    border-color: var(--trait-fort);
+    border-color: var(--accent-trait);
+    box-shadow: none;
 }
 
 .bouton-secondaire:hover {
-    color: var(--texte);
-    background: var(--releve);
-    opacity: 1;
+    color: var(--accent-fonce);
+    background: var(--accent-fond);
 }
 
 /* Tableaux */
@@ -352,6 +378,8 @@ tbody tr:last-child td {
 td.montant {
     font-family: var(--mono);
     font-size: 13px;
+    font-weight: 500;
+    color: var(--rose);
 }
 
 /* Actes et code NGAP (signature) */
@@ -376,10 +404,10 @@ td.montant {
     font-family: var(--mono);
     font-size: 12px;
     line-height: 16px;
-    color: var(--accent);
+    color: var(--accent-fonce);
     background: var(--accent-fond);
     border: 1px solid var(--accent-trait);
-    border-radius: 4px;
+    border-radius: 6px;
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
 }
@@ -437,6 +465,10 @@ td.montant {
         --fond: #ffffff;
         --carte: #ffffff;
         --ombre: none;
+    }
+
+    body {
+        background: #ffffff;
     }
 
     .barre,

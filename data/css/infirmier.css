@@ -14,8 +14,13 @@
     padding: 24px;
     background: var(--carte);
     border: 1px solid var(--trait);
-    border-radius: 16px;
+    border-top: 3px solid var(--accent);
+    border-radius: 20px;
     box-shadow: var(--ombre);
+}
+
+.patient:nth-child(even) {
+    border-top-color: var(--rose-vif);
 }
 
 .patient-entete {
@@ -34,7 +39,7 @@
 /* Le nom du patient mène à son dossier : soulignement discret pour le signaler */
 .patient-entete h2 a {
     text-decoration: underline;
-    text-decoration-color: var(--texte-3);
+    text-decoration-color: var(--rose-vif);
     text-decoration-thickness: 1px;
     text-underline-offset: 5px;
 }
@@ -72,7 +77,8 @@
     border-top: 1px solid var(--trait);
     font-size: 14px;
     line-height: 20px;
-    color: var(--texte-2);
+    font-weight: 600;
+    color: var(--accent-fonce);
 }
 
 @media (max-width: 600px) {

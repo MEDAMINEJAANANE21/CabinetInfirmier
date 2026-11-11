@@ -42,10 +42,6 @@ Projet réalisé en L3 MIAGE à l'Université Grenoble Alpes.
 | --- | --- |
 | ![Facture](docs/captures/facture.png) | ![Nomenclature](docs/captures/nomenclature.png) |
 
-Les pages suivent le thème du système (clair ou sombre) :
-
-![Tableau de bord en mode sombre](docs/captures/tableau-de-bord-sombre.png)
-
 ---
 
 ## Structure du dépôt
@@ -155,7 +151,7 @@ Les pages déjà générées s'ouvrent directement dans un navigateur :
 
 - [data/html/index.html](data/html/index.html), le tableau de bord, d'où l'on navigue vers toutes les autres pages
 
-Les feuilles de style sont référencées en chemin relatif (`../css/…`), il n'y a donc pas besoin de serveur. Les polices IBM Plex sont chargées depuis Google Fonts ; hors ligne, la police système prend le relais.
+Les feuilles de style sont référencées en chemin relatif (`../css/…`), il n'y a donc pas besoin de serveur. Les polices Figtree et DM Mono sont chargées depuis Google Fonts ; hors ligne, la police système prend le relais.
 
 ### Régénérer les pages sans Docker
 
@@ -537,11 +533,15 @@ Le dossier ne contient que l'intitulé des actes, pas leur identifiant. Pour aff
 
 ## Interface
 
-Toutes les pages partagent une même direction visuelle : une feuille de tournée sur papier, sobre et lisible pendant une journée de soins.
+Toutes les pages partagent une même identité, claire et gaie, en bleu et rose.
 
-- **Couleurs** : fond papier `#f7f4ee`, cartes `#fdfbf7`, filets à 8 % d'opacité, trois niveaux de texte. Un seul accent, vert sarcelle `#0f766e`, réservé aux codes NGAP, à la page courante et au chiffre qui compte (le patient au montant le plus élevé, les actes réalisés).
-- **Mode sombre** : automatique via `prefers-color-scheme`, avec les mêmes rôles de couleur (accent `#5fc4b6`).
-- **Typographie** : IBM Plex Sans pour le texte, IBM Plex Mono pour les données à lire d'un coup d'œil (NIR, dates, codes d'actes), chiffres tabulaires.
+- **Couleurs** : fond bleu très pâle `#f6f8ff` avec un lavis bleu et rose en haut de page, cartes blanches, texte bleu nuit `#14204a`.
+  - **Bleu** `#2563eb` : navigation, boutons, liens et codes d'actes.
+  - **Rose** `#db2777` : ce qui est mis en avant, comme les montants, les totaux, les actes réalisés dans la nomenclature et le patient au montant le plus élevé.
+  - Un filet bleu → rose sous la barre de navigation, et la même transition sur la barre du patient en tête du classement.
+- **Thème** : toujours clair, même quand le système est en mode sombre.
+- **Logo** : une croix blanche sur un carré bleu, avec un point rose, dessinée en SVG dans `commun.xsl`.
+- **Typographie** : Figtree pour le texte, DM Mono pour les données à lire d'un coup d'œil (NIR, dates, codes d'actes, montants), chiffres tabulaires.
 - **Espacements** : grille de 4 px (8, 12, 16, 24, 32…).
 - **Codes NGAP** : chaque acte est précédé de son code (`106 · AMI 2`), pour retrouver la cotation sans ouvrir la nomenclature.
 - **Navigation** : une barre en haut de chaque page, avec le nom du cabinet et les liens Tableau de bord, Tournée, Nomenclature et Données XML. Les noms de patients soulignés ouvrent leur dossier.

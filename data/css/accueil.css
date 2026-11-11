@@ -9,27 +9,38 @@
     margin-bottom: 16px;
 }
 
+/* Cartes alternées bleu / rose */
 .stat {
     padding: 20px;
-    background: var(--carte);
-    border: 1px solid var(--trait);
-    border-radius: 16px;
-    box-shadow: var(--ombre);
+    background: var(--accent-fond);
+    border: 1px solid var(--accent-trait);
+    border-radius: 20px;
+}
+
+.stat:nth-child(even) {
+    background: var(--rose-fond);
+    border-color: var(--rose-trait);
 }
 
 .stat-libelle {
-    font-size: 13px;
+    font-size: 14px;
     line-height: 20px;
+    font-weight: 500;
     color: var(--texte-2);
 }
 
 .stat-valeur {
     margin-top: 8px;
-    font-size: 28px;
+    font-size: 32px;
     line-height: 1;
-    font-weight: 500;
+    font-weight: 600;
+    color: var(--accent-fonce);
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
+}
+
+.stat:nth-child(even) .stat-valeur {
+    color: var(--rose);
 }
 
 /* Grille : graphique principal et colonne */
@@ -78,24 +89,26 @@
 }
 
 .barre-piste {
-    height: 8px;
+    height: 10px;
     background: var(--releve);
-    border-radius: 4px;
+    border-radius: 5px;
     overflow: hidden;
 }
 
 .barre-remplie {
     height: 100%;
-    background: var(--texte-3);
-    border-radius: 4px;
+    background: #93b4f7;
+    border-radius: 5px;
 }
 
+/* Le patient au montant le plus élevé : barre bleu → rose */
 .premier .barre-remplie {
-    background: var(--accent);
+    background: var(--degrade);
 }
 
 .premier .barre-valeur {
-    color: var(--texte);
+    font-weight: 500;
+    color: var(--rose);
 }
 
 /* Actes les plus réalisés */
@@ -154,10 +167,15 @@
     font-family: var(--mono);
     font-size: 12px;
     font-weight: 500;
-    color: var(--accent);
-    background: var(--accent-fond);
-    border: 1px solid var(--accent-trait);
+    color: var(--rose);
+    background: var(--rose-fond);
+    border: 1px solid var(--rose-trait);
     border-radius: 50%;
+}
+
+.classement .meta {
+    font-weight: 500;
+    color: var(--rose);
 }
 
 /* Tableau des visites */

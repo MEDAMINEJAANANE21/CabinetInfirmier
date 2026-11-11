@@ -29,11 +29,20 @@
 
 .cle-valeur {
     grid-column: 1 / -1;
-    font-size: 24px;
+    font-size: 28px;
     line-height: 1.2;
-    font-weight: 500;
-    color: var(--texte);
+    font-weight: 600;
+    color: var(--accent-fonce);
     font-variant-numeric: tabular-nums;
+}
+
+.cle:nth-child(2) {
+    background: var(--rose-fond);
+    border-color: var(--rose-trait);
+}
+
+.cle:nth-child(2) .cle-valeur {
+    color: var(--rose);
 }
 
 .nomenclature th:first-child,
@@ -52,10 +61,14 @@
 }
 
 /* Les actes réalisés dans le cabinet ressortent */
+.nomenclature tr.realise td {
+    background: var(--rose-fond);
+}
+
 .nomenclature tr.realise td.mono,
 .nomenclature tr.realise td:last-child {
-    color: var(--accent);
-    font-weight: 500;
+    color: var(--rose);
+    font-weight: 600;
 }
 
 .vide {
