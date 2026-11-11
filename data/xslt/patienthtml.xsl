@@ -18,6 +18,10 @@
             </head>
             <body>
                 <main class="page">
+                    <nav class="nav" aria-label="Navigation">
+                        <a href="infirmier.html">Retour à la tournée</a>
+                        <a href="../xml/cabinet.xml">Données XML</a>
+                    </nav>
                     <xsl:apply-templates select="pat:patient"/>
                 </main>
             </body>

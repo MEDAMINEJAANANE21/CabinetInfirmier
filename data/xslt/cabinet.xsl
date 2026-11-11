@@ -28,6 +28,10 @@
             </head>
             <body>
                 <main class="page">
+                    <nav class="nav" aria-label="Navigation">
+                        <a href="infirmier.html" aria-current="page">Tournée</a>
+                        <a href="../xml/cabinet.xml">Données XML</a>
+                    </nav>
                     <header class="entete">
                         <p class="surtitre">
                             <xsl:value-of select="med:cabinet/med:nom"/>
@@ -59,10 +63,13 @@
     <xsl:template match="med:patient">
         <section class="patient">
             <header class="patient-entete">
+                <!-- Lien vers le dossier du patient, généré sous le nom patient-NIR.html -->
                 <h2>
-                    <xsl:value-of select="normalize-space(med:nom)"/>
-                    <xsl:text> </xsl:text>
-                    <xsl:value-of select="normalize-space(med:prénom)"/>
+                    <a href="patient-{@numéro}.html">
+                        <xsl:value-of select="normalize-space(med:nom)"/>
+                        <xsl:text> </xsl:text>
+                        <xsl:value-of select="normalize-space(med:prénom)"/>
+                    </a>
                 </h2>
                 <span class="nir">NIR <xsl:value-of select="@numéro"/></span>
             </header>

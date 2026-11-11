@@ -1,0 +1,2 @@
+# Les scripts shell gardent des fins de ligne Unix, sinon ils échouent dans le conteneur
+*.sh text eol=lf

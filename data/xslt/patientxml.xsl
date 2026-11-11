@@ -8,19 +8,29 @@
     
     <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"/>
     
+    <!-- Patient à extraire : par son NIR (destinedNir) si on le donne, sinon par son prénom -->
     <xsl:param name="destinedName">Hiba</xsl:param>
+    <xsl:param name="destinedNir"></xsl:param>
     <xsl:variable name="actes" select="document('../xml/acte.xml',/)/act:ngap"/><!--fach kanbghi nkharj les infos man fichier xml akhour -->
     
     <xsl:template match="/">
         <patient xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"
                  xs:schemaLocation="http://www.univ-grenoble-alpes.fr/l3miage/patient ../xsd/patient.xsd">
-            <xsl:apply-templates select="//med:patient[med:prénom = $destinedName]"/>
+            <xsl:choose>
+                <xsl:when test="$destinedNir != ''">
+                    <xsl:apply-templates select="//med:patient[@numéro = $destinedNir]"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <!-- normalize-space : le prénom " Xavier" contient un espace dans cabinet.xml -->
+                    <xsl:apply-templates select="//med:patient[normalize-space(med:prénom) = $destinedName]"/>
+                </xsl:otherwise>
+            </xsl:choose>
         </patient>
     </xsl:template>
     
     <xsl:template match="med:patient"> 
-        <nom><xsl:value-of select="med:nom"/></nom>
-        <prénom><xsl:value-of select="med:prénom"/></prénom>
+        <nom><xsl:value-of select="normalize-space(med:nom)"/></nom>
+        <prénom><xsl:value-of select="normalize-space(med:prénom)"/></prénom>
         <sexe><xsl:value-of select="med:sexe"/></sexe>
         <naissance><xsl:value-of select="med:naissance"/></naissance>
         <numéroSS><xsl:value-of select="@numéro"/></numéroSS>

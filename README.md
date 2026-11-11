@@ -58,8 +58,9 @@ CabinetInfirmier/
 │   │   ├── patientxml.xsl     cabinet.xml → dossier XML d'un patient
 │   │   └── patienthtml.xsl    dossier XML d'un patient → page HTML
 │   ├── html/
-│   │   ├── infirmier.html     Résultat de cabinet.xsl
-│   │   └── patienthtml.html   Résultat de patienthtml.xsl
+│   │   ├── infirmier.html     Tournée, résultat de cabinet.xsl
+│   │   ├── patient-<NIR>.html Un dossier par patient, lié depuis la tournée
+│   │   └── patienthtml.html   Dossier de référence (Hiba), résultat de patientxml.xml
 │   ├── css/
 │   │   ├── infirmier.css      Styles de la tournée
 │   │   └── patient.css        Styles du dossier patient
@@ -69,6 +70,7 @@ CabinetInfirmier/
 │       ├── cabinet.puml       Diagramme de classes du cabinet (PlantUML)
 │       └── patient.puml       Diagramme de classes du dossier patient (PlantUML)
 ├── docker/
+│   ├── generer.sh             Validation XSD et génération de toutes les pages
 │   └── nginx.conf             Configuration du serveur web de l'image
 ├── docs/captures/             Captures d'écran utilisées dans ce README
 ├── Dockerfile                 Validation XSD, génération XSLT, puis service nginx
@@ -94,10 +96,13 @@ Puis ouvrir [http://localhost:8085](http://localhost:8085).
 | Adresse | Contenu |
 | --- | --- |
 | `http://localhost:8085/` | Tournée de l'infirmier (redirige vers `/html/infirmier.html`) |
-| `http://localhost:8085/patient` | Dossier patient (redirige vers `/html/patienthtml.html`) |
+| `http://localhost:8085/html/patient-<NIR>.html` | Dossier d'un patient, ouvert en cliquant sur son nom dans la tournée |
+| `http://localhost:8085/patient` | Dossier de référence de `patientxml.xml` (redirige vers `/html/patienthtml.html`) |
 | `http://localhost:8085/xml/`, `/xsd/`, `/xslt/` | Fichiers sources, consultables dans le navigateur |
 
-À la construction, l'image valide chaque fichier XML contre son schéma, puis lance les transformations XSLT avec `xsltproc`. Si un fichier XML devient invalide, la construction échoue. Les pages sont ensuite servies par nginx.
+Les pages sont reliées entre elles : chaque nom de patient de la tournée ouvre son dossier, et chaque dossier a un lien « Retour à la tournée ». Le lien « Données XML » affiche `cabinet.xml`.
+
+À la construction, l'image lance [docker/generer.sh](docker/generer.sh) : il valide chaque fichier XML contre son schéma, génère la tournée, puis un dossier par patient (chaque dossier intermédiaire est lui aussi validé contre `patient.xsd`). Si un fichier devient invalide, la construction échoue. Les pages sont ensuite servies par nginx.
 
 Options :
 
@@ -106,7 +111,7 @@ Options :
 PORT=9000 docker compose up --build             # bash
 $env:PORT=9000; docker compose up --build       # PowerShell
 
-# Afficher la tournée d'un autre infirmier, ou le dossier d'un autre patient
+# Choisir l'infirmier de la tournée, et le patient du dossier de référence
 docker compose build --build-arg INFIRMIER_ID=001 --build-arg PATIENT_PRENOM=Elvira
 docker compose up
 
@@ -125,8 +130,8 @@ docker run --rm -p 8085:80 cabinet-infirmier
 
 Les pages déjà générées s'ouvrent directement dans un navigateur :
 
-- [data/html/infirmier.html](data/html/infirmier.html)
-- [data/html/patienthtml.html](data/html/patienthtml.html)
+- [data/html/infirmier.html](data/html/infirmier.html), la tournée, d'où l'on ouvre chaque dossier
+- [data/html/patienthtml.html](data/html/patienthtml.html), le dossier de référence
 
 Les feuilles de style sont référencées en chemin relatif (`../css/…`), il n'y a donc pas besoin de serveur. Les polices IBM Plex sont chargées depuis Google Fonts ; hors ligne, la police système prend le relais.
 
@@ -134,14 +139,26 @@ Les feuilles de style sont référencées en chemin relatif (`../css/…`), il n
 
 Les commandes se lancent depuis la racine du dépôt. Chaque transformation charge `acte.xml` via `document('../xml/acte.xml', /)`, chemin résolu par rapport au fichier XML source : il faut donc laisser les fichiers dans `data/xml/`.
 
-**Avec xsltproc** (libxslt, disponible sous Linux, macOS, WSL) :
+**Avec le script** (Linux, macOS, WSL, avec xsltproc et xmllint installés) : il fait la validation et toutes les générations d'un coup.
+
+```bash
+sh docker/generer.sh
+INFIRMIER_ID=001 PATIENT_PRENOM=Elvira sh docker/generer.sh   # avec d'autres paramètres
+```
+
+**Avec xsltproc, étape par étape** :
 
 ```bash
 # Tournée de l'infirmier 001
 xsltproc --stringparam destinedId 001 \
   -o data/html/infirmier.html data/xslt/cabinet.xsl data/xml/cabinet.xml
 
-# Dossier XML de la patiente dont le prénom est Hiba, puis sa page HTML
+# Dossier d'un patient choisi par son NIR : XML intermédiaire, puis page HTML
+xsltproc --stringparam destinedNir 175037306569237 \
+  -o /tmp/patient.xml data/xslt/patientxml.xsl data/xml/cabinet.xml
+xsltproc -o data/html/patient-175037306569237.html data/xslt/patienthtml.xsl /tmp/patient.xml
+
+# Dossier de référence, choisi par prénom
 xsltproc --stringparam destinedName Hiba \
   -o data/xml/patientxml.xml data/xslt/patientxml.xsl data/xml/cabinet.xml
 xsltproc -o data/html/patienthtml.html data/xslt/patienthtml.xsl data/xml/patientxml.xml
@@ -171,6 +188,8 @@ function Invoke-Xslt($xsl, $xml, $out) {
 Invoke-Xslt data\xslt\cabinet.xsl     data\xml\cabinet.xml     data\html\infirmier.html
 Invoke-Xslt data\xslt\patienthtml.xsl data\xml\patientxml.xml  data\html\patienthtml.html
 ```
+
+Cette fonction ne passe pas de paramètres XSLT : pour générer les dossiers `patient-<NIR>.html`, utiliser Docker ou le script.
 
 Les IDE JetBrains (Rider, IntelliJ) et Oxygen XML permettent aussi de lancer une transformation depuis le fichier XSL.
 
@@ -396,9 +415,11 @@ flowchart LR
     C[cabinet.xml]
     A[acte.xml]
     C --> X1[[cabinet.xsl]] --> H1[infirmier.html]
-    C --> X2[[patientxml.xsl]] --> P[patientxml.xml] --> X3[[patienthtml.xsl]] --> H2[patienthtml.html]
+    C --> X2[["patientxml.xsl (un passage par NIR)"]] --> P["dossier XML du patient"] --> X3[[patienthtml.xsl]] --> H2["patient-NIR.html"]
     A -. "document()" .-> X1
     A -. "document()" .-> X2
+    H1 -- "lien sur le nom" --> H2
+    H2 -- "Retour à la tournée" --> H1
 ```
 
 ### `cabinet.xsl` : la tournée de l'infirmier
@@ -413,7 +434,7 @@ Fonctionnement :
    `<xsl:variable name="actes" select="document('../xml/acte.xml', /)/act:ngap"/>`
 2. Les patients retenus sont ceux qui ont au moins une visite de cet infirmier :
    `med:patient[med:visite/@intervenant = $destinedId]`. Leur nombre s'affiche en en-tête.
-3. Pour chaque patient : nom, NIR, sexe, date de naissance, adresse sur une ligne (numéro et étage seulement s'ils existent), puis le tableau des visites de cet infirmier.
+3. Pour chaque patient : nom, NIR, sexe, date de naissance, adresse sur une ligne (numéro et étage seulement s'ils existent), puis le tableau des visites de cet infirmier. Le nom est un lien vers le dossier du patient, construit à partir de son NIR avec un modèle de valeur d'attribut : `<a href="patient-{@numéro}.html">`.
 4. Chaque `<acte id="…"/>` est cherché dans la nomenclature (`$actes/act:actes/act:acte[@id = $idActeVisite]`) pour afficher son code (`101 · AMI 1,5`) et son intitulé.
 5. Un modèle nommé `date` convertit `AAAA-MM-JJ` en `JJ/MM/AAAA` et produit un élément `<time datetime="…">`.
 
@@ -421,13 +442,16 @@ Fonctionnement :
 
 | Paramètre | Valeur par défaut | Rôle |
 | --- | --- | --- |
-| `destinedName` | `Hiba` | prénom du patient à extraire |
+| `destinedNir` | vide | NIR du patient à extraire ; prioritaire s'il est renseigné |
+| `destinedName` | `Hiba` | prénom du patient à extraire, utilisé quand `destinedNir` est vide |
+
+Le NIR est unique (contrainte `unique` de `cabinet.xsd`), c'est donc lui qui sert à générer un dossier par patient. La recherche par prénom passe par `normalize-space`, car le prénom de Xavier est écrit `" Xavier"` dans `cabinet.xml`.
 
 La feuille sort du XML dans l'espace de noms `pat` (`exclude-result-prefixes="med act"` évite de recopier les autres espaces de noms). Elle remplace l'identifiant de l'intervenant par son nom et son prénom (`//med:infirmier[@id = $idIntervenant]`) et chaque identifiant d'acte par son intitulé dans `acte.xml`. Le résultat est valide par rapport à `patient.xsd`.
 
 ### `patienthtml.xsl` : afficher le dossier
 
-Transforme un dossier `pat:patient` en page HTML : en-tête avec le nom et le NIR, bloc d'informations, puis tableau des visites (date, intervenant, actes) avec leur nombre.
+Transforme un dossier `pat:patient` en page HTML : navigation (retour à la tournée), en-tête avec le nom et le NIR, bloc d'informations, puis tableau des visites (date, intervenant, actes) avec leur nombre.
 
 ---
 
@@ -440,6 +464,7 @@ Les deux pages partagent une même direction visuelle : une feuille de tournée 
 - **Typographie** : IBM Plex Sans pour le texte, IBM Plex Mono pour les données à lire d'un coup d'œil (NIR, dates, codes d'actes), chiffres tabulaires.
 - **Espacements** : grille de 4 px (8, 12, 16, 24, 32…).
 - **Codes NGAP** : chaque acte est précédé de son code (`106 · AMI 2`), pour retrouver la cotation sans ouvrir la nomenclature.
+- **Navigation** : une barre de liens en haut de chaque page (Tournée, Données XML). Dans la tournée, les noms de patients sont soulignés discrètement et ouvrent leur dossier.
 - **Petits écrans** : sous 600 px, les tableaux passent en lecture verticale (date, puis actes).
 - **Impression** : fond blanc et cartes non coupées entre deux pages, pour imprimer la tournée.
 
@@ -476,7 +501,7 @@ dotnet run
 
 - `cabinet.xsd` n'autorise qu'**une visite par patient** (`visite` sans `maxOccurs`). Pour un suivi réel, passer à `maxOccurs="unbounded"`.
 - `actes.xsd` ne contraint pas encore l'unicité des identifiants d'actes, ni le lien entre l'attribut `type` d'un acte et les `<type id="…">` déclarés (une `key` et une `keyref` suffiraient). Rien ne vérifie non plus que les `<acte id="…"/>` de `cabinet.xml` existent dans `acte.xml`, puisqu'ils sont dans deux documents différents.
-- `patientxml.xsl` sélectionne le patient par son **prénom**, qui n'est pas unique ; le NIR serait un meilleur paramètre. La feuille regroupe aussi tous les actes dans un seul élément `<visite>`, ce qui convient tant qu'un patient n'a qu'une visite.
+- `patientxml.xsl` regroupe tous les actes dans un seul élément `<visite>`, ce qui convient tant qu'un patient n'a qu'une visite.
 - Quelques coquilles dans les intitulés de `acte.xml` : « Inection » (actes 104 et 106), « sytologiques », « compirs », « démache », « infirimiers », « rigoueuse », « permanante ». Elles apparaissent telles quelles dans les pages générées.
 - Dans `cabinet.xml`, les commentaires de deux visites ne correspondent pas aux actes référencés (105 est une injection « en série », 106 une injection « chez un enfant de moins de 5 ans »).
 
